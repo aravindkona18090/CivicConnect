@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accurate Test Map</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; border: 2px solid #000; }
+        #loading { font-size: 16px; color: red; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div id="loading">Fetching your accurate location…</div>
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([0, 0], 2); // initial placeholder
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        function locateUser(retries = 3) {
+            if (!navigator.geolocation) {
+                document.getElementById('loading').innerText = "Geolocation is not supported by your browser.";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    var accuracy = position.coords.accuracy;
+
+                    map.setView([lat, lng], 18); // zoom in
+                    L.marker([lat, lng]).addTo(map)
+                        .bindPopup("You are here<br>Accuracy: " + accuracy.toFixed(2) + " meters")
+                        .openPopup();
+
+                    document.getElementById('loading').innerText = "";
+                },
+                function(error) {
+                    if (retries > 0) {
+                        console.log("Retrying for accurate location…", retries);
+                        setTimeout(() => locateUser(retries - 1), 2000);
+                    } else {
+                        document.getElementById('loading').innerText = "Unable to get accurate location.";
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        locateUser();
+    </script>
+</body>
+</html>
