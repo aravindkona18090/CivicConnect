@@ -156,7 +156,7 @@ Example:
 
 B.Tech Artificial Intelligence & Machine Learning
 
-GitHub: https://github.com/aravindkona
+GitHub: https://github.com/aravindkona18090
 
 LinkedIn: www.linkedin.com/in/kona-aravind-ranga-reddy-1736b0344
 
