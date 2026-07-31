@@ -1,12 +1,10 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use Resend;
+require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-require __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . "/../db/connection.php";
-require_once __DIR__ . "/lang.php";
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php");
@@ -91,55 +89,69 @@ if (isset($_POST['submit_problem'])) {
                     $msg = "✅ " . ($lang[$selectedLang]['report_new'] ?? "Problem reported") . " successfully!";
 
                     // --- 4. Send emails ---
-                    try {
-                        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = getenv('MAIL_USERNAME');
-        $mail->Password = getenv('MAIL_PASSWORD');
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+                   try {
 
-        $mail->Timeout = 10;
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
+    $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-                        // User Confirmation Email
-                        $mail->setFrom('civicconnectmailer@gmail.com', 'CivicConnect');
-                        if (!empty($user_email)) {
-                            $mail->addAddress($user_email, $user_name);
-                            $mail->isHTML(true);
-                            $mail->Subject = "CivicConnect - Problem Submission Confirmation";
-                            $mail->Body = "<h2>Dear " . htmlspecialchars($user_name) . ",</h2>
-                                <p>Your problem has been successfully submitted (ID: <strong>$problem_id</strong>).</p>
-                                <ul>
-                                    <li><strong>Description:</strong> " . htmlspecialchars($description) . "</li>
-                                    <li><strong>Category:</strong> " . htmlspecialchars($category) . "</li>
-                                    <li><strong>Location:</strong> " . htmlspecialchars($address) . "</li>
-                                </ul>
-                                <p>We will notify you once a worker is assigned and when your problem is resolved.</p>
-                                <p>Regards,<br/>CivicConnect Team</p>";
-                            $mail->send();
-                        }
+    // -------------------------
+    // Email to User
+    // -------------------------
+    if (!empty($user_email)) {
 
-                        // Admin Notification Email
-                        $admin = 'civicconnect24@gmail.com';
-                        $mail->clearAddresses();
-                        $mail->addAddress($admin, 'Admin');
-                        $mail->Subject = "CivicConnect - New Problem Submitted (ID: $problem_id)";
-                        $mail->Body = "<h2>New Problem Submitted</h2>
-                            <p>A new problem has been reported and requires review.</p>
-                            <ul>
-                                <li><strong>Problem ID:</strong> $problem_id</li>
-                                <li><strong>Description:</strong> " . htmlspecialchars($description) . "</li>
-                                <li><strong>Category:</strong> " . htmlspecialchars($category) . "</li>
-                                <li><strong>Location:</strong> " . htmlspecialchars($address) . "</li>
-                                <li><strong>Reported By:</strong> " . htmlspecialchars($user_name) . " (" . htmlspecialchars($user_email) . ")</li>
-                            </ul>";
-                        $mail->send();
-                    } catch (Exception $e) {
-                        // Log $e->getMessage() if you have logging; don't break user flow
-                    }
+        $resend->emails->send([
+            'from' => 'CivicConnect <onboarding@resend.dev>',
+            'to' => [$user_email],
+            'subject' => 'CivicConnect - Problem Submission Confirmation',
+            'html' => "
+                <h2>Dear {$user_name},</h2>
+
+                <p>Your problem has been successfully submitted.</p>
+
+                <p><strong>Problem ID:</strong> {$problem_id}</p>
+
+                <ul>
+                    <li><strong>Description:</strong> {$description}</li>
+                    <li><strong>Category:</strong> {$category}</li>
+                    <li><strong>Location:</strong> {$address}</li>
+                </ul>
+
+                <p>We will notify you once your complaint is accepted and again when it is completed.</p>
+
+                <br>
+
+                <p>Regards,<br>CivicConnect Team</p>
+            "
+        ]);
+    }
+
+    // -------------------------
+    // Email to Admin
+    // -------------------------
+    $resend->emails->send([
+        'from' => 'CivicConnect <onboarding@resend.dev>',
+        'to' => ['civicconnect24@gmail.com'],
+        'subject' => "New Problem Submitted (ID: {$problem_id})",
+        'html' => "
+            <h2>New Problem Submitted</h2>
+
+            <p>A new civic issue has been reported.</p>
+
+            <ul>
+                <li><strong>Problem ID:</strong> {$problem_id}</li>
+                <li><strong>Description:</strong> {$description}</li>
+                <li><strong>Category:</strong> {$category}</li>
+                <li><strong>Location:</strong> {$address}</li>
+                <li><strong>Reported By:</strong> {$user_name}</li>
+                <li><strong>Email:</strong> {$user_email}</li>
+            </ul>
+        "
+    ]);
+
+} catch (\Exception $e) {
+
+    error_log("Resend Error: " . $e->getMessage());
+
+}
                 } else {
                     $msg = "❌ Error submitting problem: " . $stmt_insert->error;
                 }

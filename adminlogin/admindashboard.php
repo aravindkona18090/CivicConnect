@@ -1,35 +1,29 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+<?php
+
 include("../db/connection.php");
 require __DIR__ . '/../vendor/autoload.php';
 
-// Function to send mail
-function sendUserMail($to, $name, $subject, $body) {
-    $mail = new PHPMailer(true);
+use Resend;
+function sendUserMail($to, $name, $subject, $body)
+{
     try {
-       $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = getenv('MAIL_USERNAME');
-        $mail->Password = getenv('MAIL_PASSWORD');
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-        $mail->Timeout = 10;
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
-        $mail->setFrom('civicconnectmailer@gmail.com', 'CivicConnect');
-        $mail->addAddress($to, $name);
-        $mail->isHTML(true);
-        $mail->Subject = $subject;
-        $mail->Body = $body;
-        $mail->send();
-    } catch (Exception $e) {
-        // Log error
+        $resend->emails->send([
+            'from' => 'CivicConnect <onboarding@resend.dev>',
+            'to' => [$to],
+            'subject' => $subject,
+            'html' => $body,
+        ]);
+
+        return true;
+
+    } catch (\Exception $e) {
+        error_log("Resend Error: " . $e->getMessage());
+        return false;
     }
 }
-
 // Fetch user info helper
 function getUserDetails($conn, $problem_id) {
     $query = "SELECT p.id, p.description, p.category, u.username, u.email 
