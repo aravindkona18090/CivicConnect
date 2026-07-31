@@ -1,6 +1,4 @@
 <?php
-<?php
-
 include("../db/connection.php");
 require __DIR__ . '/../vendor/autoload.php';
 
