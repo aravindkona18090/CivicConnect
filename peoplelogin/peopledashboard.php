@@ -1,15 +1,9 @@
 <?php
-use Resend;
-require __DIR__ . '/../vendor/autoload.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../db/connection.php';
 
 session_start();
-
-
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../index.php");
-    exit();
-}
 
 // Language switch
 if (isset($_POST['language'])) {
