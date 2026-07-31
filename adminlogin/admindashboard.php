@@ -8,14 +8,17 @@ require __DIR__ . '/../vendor/autoload.php';
 function sendUserMail($to, $name, $subject, $body) {
     $mail = new PHPMailer(true);
     try {
-        $mail->isSMTP();
+       $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'civicconnectmailer@gmail.com';
-        $mail->Password = 'frkiicwjfugwpqrp';
+        $mail->Username = getenv('MAIL_USERNAME');
+        $mail->Password = getenv('MAIL_PASSWORD');
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
+        $mail->Timeout = 10;
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = 'html';
         $mail->setFrom('civicconnectmailer@gmail.com', 'CivicConnect');
         $mail->addAddress($to, $name);
         $mail->isHTML(true);
