@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Master 30 Logo Concepts Showcase</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;600;800;900&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px 24px 80px;
+      min-height: 100vh;
+    }
+
+    header {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.1);
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(37, 99, 235, 0.2);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+    }
+
+    p.subtitle {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 750px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    /* Category Navigation Bar */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto 40px;
+    }
+
+    .filter-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    .logo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.12);
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+
+    .index-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #0f172a;
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    .logo-preview-box {
+      background: #ffffff;
+      border: 1px solid #f1f5f9;
+      border-radius: 16px;
+      padding: 30px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 135px;
+      margin: 18px 0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .logo-preview-box.dark-bg {
+      background: #0f172a;
+      border-color: #1e293b;
+    }
+
+    .option-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .style-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* ----------------------------------------------------
+       LOGO STYLES (#1 to #30)
+    ---------------------------------------------------- */
+    
+    /* Global Flex Layout */
+    .l-item { display: flex; align-items: center; gap: 14px; }
+    
+    /* #1: Electric Royal Shield */
+    .l1-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35); }
+    .l1-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+    /* #2: Emerald Civic Badge */
+    .l2-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #059669 0%, #10b981 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35); }
+    .l2-title { font-family: 'Outfit', sans-serif; font-size: 1.65rem; font-weight: 800; color: #064e3b; }
+
+    /* #3: Amber Horizon Crest */
+    .l3-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35); }
+    .l3-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+    /* #4: Diamond Guard Crest */
+    .l4-icon { width: 46px; height: 46px; background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transform: rotate(45deg); }
+    .l4-icon i { transform: rotate(-45deg); }
+    .l4-title { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 900; color: #0f172a; letter-spacing: -0.02em; }
+
+    /* #5: Sovereign Heritage Crown */
+    .l5-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #b45309 0%, #78350f 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fef08a; font-size: 1.3rem; border: 2px solid #f59e0b; }
+    .l5-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.55rem; font-weight: 800; color: #78350f; }
+
+    /* #6: Vision AI Pulse Pin */
+    .l6-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4); }
+    .l6-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: #0f172a; }
+
+    /* #7: GPS Target Crosshair */
+    .l7-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l7-title { font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 800; color: #0369a1; }
+
+    /* #8: Geo-Beacon Ring */
+    .l8-icon { width: 48px; height: 48px; background: #0f172a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 1.3rem; border: 2px dashed #38bdf8; }
+    .l8-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+    /* #9: Radar Pulse Node */
+    .l9-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l9-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: #581c87; }
+
+    /* #10: Map Marker Gradient */
+    .l10-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l10-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.55rem; font-weight: 800; color: #831843; }
+
+    /* #11: Cyber Tech Node */
+    .l11-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transform: rotate(-5deg); }
+    .l11-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.55rem; font-weight: 700; color: #0f172a; }
+
+    /* #12: Minimalist Outline Skyline */
+    .l12-icon { width: 48px; height: 48px; border: 2px solid #2563eb; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #2563eb; font-size: 1.3rem; }
+    .l12-title { font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.12em; color: #0f172a; text-transform: uppercase; }
+
+    /* #13: Infinity Loop Ring */
+    .l13-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; }
+    .l13-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; color: #0f172a; }
+
+    /* #14: Dynamic Speed Arrow */
+    .l14-icon { width: 46px; height: 46px; background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transform: rotate(45deg); }
+    .l14-icon i { transform: rotate(-45deg); }
+    .l14-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; font-style: italic; }
+
+    /* #15: Hexagon Data Mesh */
+    .l15-icon { width: 48px; height: 48px; background: #0f172a; color: #38bdf8; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .l15-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.55rem; font-weight: 800; color: #0f172a; }
+
+    /* #16: Midnight Sapphire (Dark Mode) */
+    .l16-icon { width: 48px; height: 48px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #38bdf8; font-size: 1.3rem; box-shadow: 0 0 20px rgba(56, 189, 248, 0.3); }
+    .l16-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #ffffff; }
+
+    /* #17: Neon Eco Emerald (Dark Mode) */
+    .l17-icon { width: 48px; height: 48px; background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #34d399; font-size: 1.3rem; box-shadow: 0 0 20px rgba(52, 211, 153, 0.3); }
+    .l17-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: #ffffff; }
+
+    /* #18: Cyberpunk Purple Neon (Dark Mode) */
+    .l18-icon { width: 48px; height: 48px; background: rgba(192, 132, 252, 0.15); border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #c084fc; font-size: 1.3rem; box-shadow: 0 0 20px rgba(192, 132, 252, 0.3); }
+    .l18-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: #ffffff; }
+
+    /* #19: Dark Amber Prism (Dark Mode) */
+    .l19-icon { width: 48px; height: 48px; background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.4); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 1.3rem; box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+    .l19-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #ffffff; }
+
+    /* #20: Glassmorphic Frost Pill (Dark Mode) */
+    .l20-icon { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 1.3rem; }
+    .l20-title { font-family: 'Inter', sans-serif; font-size: 1.55rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
+
+    /* #21: Monogram CC Box */
+    .l21-icon { width: 48px; height: 48px; background: #0f172a; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; border: 2px solid #2563eb; font-weight: 900; font-family: 'Inter', sans-serif; }
+    .l21-title { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+    /* #22: Connected Line Nodes */
+    .l22-icon { width: 48px; height: 48px; background: #e0f2fe; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #0284c7; font-size: 1.3rem; border: 1.5px solid #0284c7; }
+    .l22-title { font-family: 'Poppins', sans-serif; font-size: 1.55rem; font-weight: 700; color: #0369a1; }
+
+    /* #23: Two-Tone Split Weight */
+    .l23-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #818cf8; font-size: 1.3rem; }
+    .l23-title { font-family: 'Inter', sans-serif; font-size: 1.65rem; font-weight: 400; color: #0f172a; }
+    .l23-title strong { font-weight: 900; color: #312e81; }
+
+    /* #24: Classic Civic Pillar */
+    .l24-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #334155 0%, #0f172a 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #f8fafc; font-size: 1.3rem; }
+    .l24-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: #0f172a; letter-spacing: 0.05em; }
+
+    /* #25: Abstract Smart Loop */
+    .l25-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l25-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: #be123c; }
+
+    /* #26: Handshake Community Shield */
+    .l26-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #10b981 0%, #0284c7 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l26-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+    /* #27: Smart Lightbulb City */
+    .l27-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l27-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.55rem; font-weight: 800; color: #854d0e; }
+
+    /* #28: Eco-Leaf Green Ward */
+    .l28-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #15803d 0%, #22c55e 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l28-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: #14532d; }
+
+    /* #29: High-Contrast Black & Gold */
+    .l29-icon { width: 48px; height: 48px; background: #000000; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 1.3rem; border: 2px solid #fbbf24; }
+    .l29-title { font-family: 'Inter', sans-serif; font-size: 1.55rem; font-weight: 900; color: #000000; letter-spacing: 0.04em; }
+
+    /* #30: Vibrant Spectrum Wave */
+    .l30-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; }
+    .l30-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 800; color: #0f172a; }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="pill">✨ CivicConnect Master Branding Gallery</div>
+    <h1>30 Unique Logo & Typography Concepts</h1>
+    <p class="subtitle">Filter by category or scroll through all 30 options below. Simply tell me the <strong>Index Number (#1 to #30)</strong> of your favorite design!</p>
+  </header>
+
+  <!-- Filter Navigation -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCategory('all')">All 30 Logos</button>
+    <button class="filter-btn" onclick="filterCategory('shields')">Shields & Badges (#1-#5)</button>
+    <button class="filter-btn" onclick="filterCategory('gis')">GIS Pins & Map (#6-#10)</button>
+    <button class="filter-btn" onclick="filterCategory('tech')">Modern Tech (#11-#15)</button>
+    <button class="filter-btn" onclick="filterCategory('dark')">Dark Glassmorphic (#16-#20)</button>
+    <button class="filter-btn" onclick="filterCategory('mono')">Monograms (#21-#25)</button>
+    <button class="filter-btn" onclick="filterCategory('creative')">Creative Hybrid (#26-#30)</button>
+  </div>
+
+  <div class="grid">
+
+    <!-- #1 -->
+    <div class="logo-card" data-cat="shields">
+      <div class="index-badge">#1</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l1-icon"><i class="fa-solid fa-city"></i></div>
+          <div>
+            <div class="l1-title">Civic<span style="color:#2563eb;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600; text-transform:uppercase;">Smart Municipal Intelligence</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Electric Royal Shield (Top Pick)</div>
+        <p style="font-size:0.85rem; color:#64748b;">Royal Blue gradient badge + clean modern typography. High municipal trust.</p>
+        <div class="style-tags"><span class="tag">#2563eb Royal</span><span class="tag">Plus Jakarta Sans</span></div>
+      </div>
+    </div>
+
+    <!-- #2 -->
+    <div class="logo-card" data-cat="shields">
+      <div class="index-badge">#2</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l2-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <div class="l2-title">Civic<span style="color:#059669;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#047857; font-weight:600;">Clean & Safe Communities</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Emerald Civic Crest</div>
+        <p style="font-size:0.85rem; color:#64748b;">Eco-emerald green palette + soft rounded typography.</p>
+        <div class="style-tags"><span class="tag">#059669 Emerald</span><span class="tag">Outfit Font</span></div>
+      </div>
+    </div>
+
+    <!-- #3 -->
+    <div class="logo-card" data-cat="shields">
+      <div class="index-badge">#3</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l3-icon"><i class="fa-solid fa-building-shield"></i></div>
+          <div>
+            <div class="l3-title">Civic<span style="color:#d97706;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#b45309; font-weight:600;">City Governance Platform</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Amber Horizon Crest</div>
+        <p style="font-size:0.85rem; color:#64748b;">Warm amber-gold crest with slate text. Official government look.</p>
+        <div class="style-tags"><span class="tag">#d97706 Amber</span><span class="tag">Government</span></div>
+      </div>
+    </div>
+
+    <!-- #4 -->
+    <div class="logo-card" data-cat="shields">
+      <div class="index-badge">#4</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l4-icon"><i class="fa-solid fa-shield-heart"></i></div>
+          <div>
+            <div class="l4-title">CIVIC<span style="color:#3b82f6;">CONNECT</span></div>
+            <div style="font-size:0.75rem; color:#1e293b; font-weight:700;">Urban Protection Network</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Diamond Guard Crest</div>
+        <p style="font-size:0.85rem; color:#64748b;">Rotated dark slate diamond with crisp bold Inter typography.</p>
+        <div class="style-tags"><span class="tag">Diamond Icon</span><span class="tag">Inter 900</span></div>
+      </div>
+    </div>
+
+    <!-- #5 -->
+    <div class="logo-card" data-cat="shields">
+      <div class="index-badge">#5</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l5-icon"><i class="fa-solid fa-crown"></i></div>
+          <div>
+            <div class="l5-title">CIVIC<span style="color:#d97706;">CONNECT</span></div>
+            <div style="font-size:0.75rem; color:#78350f; font-weight:700;">Municipal Excellence</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Sovereign Heritage Crown</div>
+        <p style="font-size:0.85rem; color:#64748b;">Golden circular crown badge with strong Space Grotesk font.</p>
+        <div class="style-tags"><span class="tag">Gold Crown</span><span class="tag">Space Grotesk</span></div>
+      </div>
+    </div>
+
+    <!-- #6 -->
+    <div class="logo-card" data-cat="gis">
+      <div class="index-badge">#6</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l6-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+          <div>
+            <div class="l6-title">CIVIC<span style="color:#7c3aed;">CONNECT</span></div>
+            <div style="font-size:0.7rem; color:#6d28d9; font-weight:700; text-transform:uppercase;">Vision AI & GIS Mapping</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Vision AI Pulse Pin</div>
+        <p style="font-size:0.85rem; color:#64748b;">Purple-blue circular location badge with modern tech geometric text.</p>
+        <div class="style-tags"><span class="tag">#7c3aed Purple</span><span class="tag">GIS Pin</span></div>
+      </div>
+    </div>
+
+    <!-- #7 -->
+    <div class="logo-card" data-cat="gis">
+      <div class="index-badge">#7</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l7-icon"><i class="fa-solid fa-crosshairs"></i></div>
+          <div>
+            <div class="l7-title">Civic<span style="color:#0284c7;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#0369a1; font-weight:600;">Geo-Targeting Portal</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">GPS Target Crosshair</div>
+        <p style="font-size:0.85rem; color:#64748b;">Sky blue crosshair icon highlighting pinpoint location accuracy.</p>
+        <div class="style-tags"><span class="tag">#0284c7 Sky Blue</span><span class="tag">GPS Crosshair</span></div>
+      </div>
+    </div>
+
+    <!-- #8 -->
+    <div class="logo-card" data-cat="gis">
+      <div class="index-badge">#8</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l8-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+          <div>
+            <div class="l8-title">Civic<span style="color:#38bdf8;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Live Ward Beacon</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Geo-Beacon Ring</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark satellite circular badge with dashed cyan radar border.</p>
+        <div class="style-tags"><span class="tag">Radar Beacon</span><span class="tag">Outfit Font</span></div>
+      </div>
+    </div>
+
+    <!-- #9 -->
+    <div class="logo-card" data-cat="gis">
+      <div class="index-badge">#9</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l9-icon"><i class="fa-solid fa-wave-square"></i></div>
+          <div>
+            <div class="l9-title">Civic<span style="color:#9333ea;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#6b21a8; font-weight:700;">AI Ward Scanner</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Radar Pulse Node</div>
+        <p style="font-size:0.85rem; color:#64748b;">Neon violet wave badge symbolizing instant issue scanning.</p>
+        <div class="style-tags"><span class="tag">#9333ea Violet</span><span class="tag">Wave Pulse</span></div>
+      </div>
+    </div>
+
+    <!-- #10 -->
+    <div class="logo-card" data-cat="gis">
+      <div class="index-badge">#10</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l10-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <div class="l10-title">Civic<span style="color:#ec4899;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#9d174d; font-weight:700;">Community Pinpoint</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Map Marker Gradient</div>
+        <p style="font-size:0.85rem; color:#64748b;">Vibrant magenta-purple gradient badge with bold location pin.</p>
+        <div class="style-tags"><span class="tag">#ec4899 Pink</span><span class="tag">Location Marker</span></div>
+      </div>
+    </div>
+
+    <!-- #11 -->
+    <div class="logo-card" data-cat="tech">
+      <div class="index-badge">#11</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l11-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div>
+            <div class="l11-title">Civic<span style="color:#06b6d4;">//</span><span style="color:#3b82f6;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#0284c7; font-weight:600;">Citizen Authority Synergy</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Cyber Tech Node</div>
+        <p style="font-size:0.85rem; color:#64748b;">Cyan network node with double slash code accents.</p>
+        <div class="style-tags"><span class="tag">#06b6d4 Cyan</span><span class="tag">Cyber Code</span></div>
+      </div>
+    </div>
+
+    <!-- #12 -->
+    <div class="logo-card" data-cat="tech">
+      <div class="index-badge">#12</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l12-icon"><i class="fa-solid fa-landmark-dome"></i></div>
+          <div>
+            <div class="l12-title">CIVIC<span style="color:#2563eb;">CONNECT</span></div>
+            <div style="font-size:0.7rem; color:#64748b; font-weight:600; letter-spacing:0.15em;">Urban Issue Portal</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Minimalist Outline Skyline</div>
+        <p style="font-size:0.85rem; color:#64748b;">Ultra-clean outline badge with uppercase tracked typography.</p>
+        <div class="style-tags"><span class="tag">Minimal Outline</span><span class="tag">Inter Font</span></div>
+      </div>
+    </div>
+
+    <!-- #13 -->
+    <div class="logo-card" data-cat="tech">
+      <div class="index-badge">#13</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l13-icon"><i class="fa-solid fa-infinity"></i></div>
+          <div>
+            <div class="l13-title">Civic<span style="color:#0284c7; font-weight:800;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:500;">Continuous Resolution Loop</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Infinity Loop Ring</div>
+        <p style="font-size:0.85rem; color:#64748b;">Gradient infinity icon symbolizing continuous city progress.</p>
+        <div class="style-tags"><span class="tag">Infinity Loop</span><span class="tag">Outfit Font</span></div>
+      </div>
+    </div>
+
+    <!-- #14 -->
+    <div class="logo-card" data-cat="tech">
+      <div class="index-badge">#14</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l14-icon"><i class="fa-solid fa-location-arrow"></i></div>
+          <div>
+            <div class="l14-title">Civic<span style="color:#ef4444;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#dc2626; font-weight:700; font-style:normal;">Fast-Track Action</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Dynamic Speed Arrow</div>
+        <p style="font-size:0.85rem; color:#64748b;">Rotated crimson-amber diamond icon with italicized text.</p>
+        <div class="style-tags"><span class="tag">#ef4444 Crimson</span><span class="tag">Rapid Action</span></div>
+      </div>
+    </div>
+
+    <!-- #15 -->
+    <div class="logo-card" data-cat="tech">
+      <div class="index-badge">#15</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l15-icon"><i class="fa-solid fa-cubes"></i></div>
+          <div>
+            <div class="l15-title">Civic<span style="color:#0284c7;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#0369a1; font-weight:700;">Smart Infrastructure Core</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Hexagon Data Mesh</div>
+        <p style="font-size:0.85rem; color:#64748b;">Clip-path dark hexagon badge with data mesh cube icon.</p>
+        <div class="style-tags"><span class="tag">Hexagon Clip</span><span class="tag">Data Mesh</span></div>
+      </div>
+    </div>
+
+    <!-- #16 -->
+    <div class="logo-card" data-cat="dark">
+      <div class="index-badge">#16</div>
+      <div class="logo-preview-box dark-bg">
+        <div class="l-item">
+          <div class="l16-icon"><i class="fa-solid fa-city"></i></div>
+          <div>
+            <div class="l16-title">Civic<span style="color:#38bdf8;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#94a3b8; font-weight:600;">Next-Gen City Platform</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Midnight Sapphire (Dark Glow)</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark mode glassmorphic card with glowing cyan outline.</p>
+        <div class="style-tags"><span class="tag">Dark Mode</span><span class="tag">Neon Sapphire</span></div>
+      </div>
+    </div>
+
+    <!-- #17 -->
+    <div class="logo-card" data-cat="dark">
+      <div class="index-badge">#17</div>
+      <div class="logo-preview-box dark-bg">
+        <div class="l-item">
+          <div class="l17-icon"><i class="fa-solid fa-seedling"></i></div>
+          <div>
+            <div class="l17-title">Civic<span style="color:#34d399;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#a7f3d0; font-weight:600;">Sustainable Urban Portal</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Neon Eco Emerald (Dark Glow)</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark background with glowing neon mint seedling city badge.</p>
+        <div class="style-tags"><span class="tag">Dark Mode</span><span class="tag">#34d399 Mint</span></div>
+      </div>
+    </div>
+
+    <!-- #18 -->
+    <div class="logo-card" data-cat="dark">
+      <div class="index-badge">#18</div>
+      <div class="logo-preview-box dark-bg">
+        <div class="l-item">
+          <div class="l18-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div>
+            <div class="l18-title">Civic<span style="color:#c084fc;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#e9d5ff; font-weight:600;">AI Powered Grid</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Cyberpunk Purple Neon (Dark)</div>
+        <p style="font-size:0.85rem; color:#64748b;">High contrast dark card with glowing ultra-violet lightning bolt.</p>
+        <div class="style-tags"><span class="tag">Dark Mode</span><span class="tag">Ultra Violet</span></div>
+      </div>
+    </div>
+
+    <!-- #19 -->
+    <div class="logo-card" data-cat="dark">
+      <div class="index-badge">#19</div>
+      <div class="logo-preview-box dark-bg">
+        <div class="l-item">
+          <div class="l19-icon"><i class="fa-solid fa-sun"></i></div>
+          <div>
+            <div class="l19-title">Civic<span style="color:#fbbf24;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#fde68a; font-weight:600;">Smart City Sunshine</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Dark Amber Prism (Dark Mode)</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark obsidian backdrop with warm glowing amber sunburst badge.</p>
+        <div class="style-tags"><span class="tag">Dark Mode</span><span class="tag">Amber Glow</span></div>
+      </div>
+    </div>
+
+    <!-- #20 -->
+    <div class="logo-card" data-cat="dark">
+      <div class="index-badge">#20</div>
+      <div class="logo-preview-box dark-bg">
+        <div class="l-item">
+          <div class="l20-icon"><i class="fa-solid fa-gem"></i></div>
+          <div>
+            <div class="l20-title">Civic<span style="color:#60a5fa;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#cbd5e1; font-weight:600;">Premium Municipal Suite</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Glassmorphic Frost Pill (Dark)</div>
+        <p style="font-size:0.85rem; color:#64748b;">Frosted circular glass emblem with clean white Inter font.</p>
+        <div class="style-tags"><span class="tag">Dark Glass</span><span class="tag">Inter 800</span></div>
+      </div>
+    </div>
+
+    <!-- #21 -->
+    <div class="logo-card" data-cat="mono">
+      <div class="index-badge">#21</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l21-icon">CC</div>
+          <div>
+            <div class="l21-title">Civic<span style="color:#2563eb;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Unified Citizen Platform</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Monogram CC Box</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark square monogram displaying "CC" initials with Inter font.</p>
+        <div class="style-tags"><span class="tag">Monogram CC</span><span class="tag">Inter Font</span></div>
+      </div>
+    </div>
+
+    <!-- #22 -->
+    <div class="logo-card" data-cat="mono">
+      <div class="index-badge">#22</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l22-icon"><i class="fa-solid fa-diagram-project"></i></div>
+          <div>
+            <div class="l22-title">Civic<span style="color:#0284c7;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Connected Community Mesh</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Connected Line Nodes</div>
+        <p style="font-size:0.85rem; color:#64748b;">Outline badge showing interconnected nodes with Poppins font.</p>
+        <div class="style-tags"><span class="tag">Poppins Font</span><span class="tag">Project Nodes</span></div>
+      </div>
+    </div>
+
+    <!-- #23 -->
+    <div class="logo-card" data-cat="mono">
+      <div class="index-badge">#23</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l23-icon"><i class="fa-solid fa-shapes"></i></div>
+          <div>
+            <div class="l23-title">Civic<strong>Connect</strong></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Dual Weight Typography</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Two-Tone Split Weight</div>
+        <p style="font-size:0.85rem; color:#64748b;">Contrast between light "Civic" and ultra-heavy bold "Connect".</p>
+        <div class="style-tags"><span class="tag">Inter 900</span><span class="tag">Dual Weight</span></div>
+      </div>
+    </div>
+
+    <!-- #24 -->
+    <div class="logo-card" data-cat="mono">
+      <div class="index-badge">#24</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l24-icon"><i class="fa-solid fa-landmark"></i></div>
+          <div>
+            <div class="l24-title">CIVIC<span style="color:#475569;">CONNECT</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:700;">Municipal Integrity</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Classic Civic Pillar</div>
+        <p style="font-size:0.85rem; color:#64748b;">Dark slate pillar badge with Space Grotesk tracked lettering.</p>
+        <div class="style-tags"><span class="tag">Classic Pillar</span><span class="tag">Space Grotesk</span></div>
+      </div>
+    </div>
+
+    <!-- #25 -->
+    <div class="logo-card" data-cat="mono">
+      <div class="index-badge">#25</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l25-icon"><i class="fa-solid fa-link"></i></div>
+          <div>
+            <div class="l25-title">Civic<span style="color:#f43f5e;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#be123c; font-weight:600;">Direct Link Network</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Abstract Smart Loop</div>
+        <p style="font-size:0.85rem; color:#64748b;">Rose pink link icon symbolizing direct connection to city council.</p>
+        <div class="style-tags"><span class="tag">#f43f5e Rose</span><span class="tag">Direct Link</span></div>
+      </div>
+    </div>
+
+    <!-- #26 -->
+    <div class="logo-card" data-cat="creative">
+      <div class="index-badge">#26</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l26-icon"><i class="fa-solid fa-handshake"></i></div>
+          <div>
+            <div class="l26-title">Civic<span style="color:#0284c7;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#0369a1; font-weight:600;">Citizen & Authority Unity</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Community Handshake Shield</div>
+        <p style="font-size:0.85rem; color:#64748b;">Green-blue handshake badge representing trust between citizens & workers.</p>
+        <div class="style-tags"><span class="tag">Handshake Icon</span><span class="tag">Unity Theme</span></div>
+      </div>
+    </div>
+
+    <!-- #27 -->
+    <div class="logo-card" data-cat="creative">
+      <div class="index-badge">#27</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l27-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <div>
+            <div class="l27-title">Civic<span style="color:#ca8a04;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#854d0e; font-weight:700;">Smart Innovation Engine</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Smart Lightbulb City</div>
+        <p style="font-size:0.85rem; color:#64748b;">Warm golden lightbulb badge symbolizing bright smart city ideas.</p>
+        <div class="style-tags"><span class="tag">#ca8a04 Gold</span><span class="tag">Lightbulb Icon</span></div>
+      </div>
+    </div>
+
+    <!-- #28 -->
+    <div class="logo-card" data-cat="creative">
+      <div class="index-badge">#28</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l28-icon"><i class="fa-solid fa-leaf"></i></div>
+          <div>
+            <div class="l28-title">Civic<span style="color:#15803d;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#14532d; font-weight:700;">Green City Ward</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Eco-Leaf Green Ward</div>
+        <p style="font-size:0.85rem; color:#64748b;">Forest green leaf badge for clean environment and garbage reporting.</p>
+        <div class="style-tags"><span class="tag">Forest Green</span><span class="tag">Eco Leaf</span></div>
+      </div>
+    </div>
+
+    <!-- #29 -->
+    <div class="logo-card" data-cat="creative">
+      <div class="index-badge">#29</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l29-icon"><i class="fa-solid fa-shield-cat"></i></div>
+          <div>
+            <div class="l29-title">CIVIC<span style="color:#b45309;">CONNECT</span></div>
+            <div style="font-size:0.75rem; color:#000000; font-weight:800;">Luxury Municipal Crest</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">High-Contrast Black & Gold</div>
+        <p style="font-size:0.85rem; color:#64748b;">Black badge with golden outline. High contrast prestige look.</p>
+        <div class="style-tags"><span class="tag">Black & Gold</span><span class="tag">High Contrast</span></div>
+      </div>
+    </div>
+
+    <!-- #30 -->
+    <div class="logo-card" data-cat="creative">
+      <div class="index-badge">#30</div>
+      <div class="logo-preview-box">
+        <div class="l-item">
+          <div class="l30-icon"><i class="fa-solid fa-rainbow"></i></div>
+          <div>
+            <div class="l30-title">Civic<span style="color:#8b5cf6;">Connect</span></div>
+            <div style="font-size:0.75rem; color:#64748b; font-weight:600;">Multi-Service Spectrum</div>
+          </div>
+        </div>
+      </div>
+      <div class="details">
+        <div class="option-title">Vibrant Spectrum Wave</div>
+        <p style="font-size:0.85rem; color:#64748b;">Triple gradient badge (Pink to Violet to Blue) representing all city services.</p>
+        <div class="style-tags"><span class="tag">Triple Gradient</span><span class="tag">Spectrum</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  function filterCategory(cat) {
+    // Toggle active button
+    const btns = document.querySelectorAll('.filter-btn');
+    btns.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Filter cards
+    const cards = document.querySelectorAll('.logo-card');
+    cards.forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+  </script>
+
+</body>
+</html>
