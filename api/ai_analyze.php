@@ -135,7 +135,7 @@ function analyzeWithDirectPythonXAMPP($tmpPath, $fileName = "") {
 
 // EXECUTION HIERARCHY:
 // 1. Google Cloud Vision AI (Primary) -> 2. Local Trained ML Model -> 3. XAMPP Backup Engine
-$geminiApiKey = getenv('GEMINI_API_KEY') ?: 'AIzaSyAAv0uhwdBCasTeZLRCUnmk5qB9UlU86Fk';
+$geminiApiKey = getenv('GEMINI_API_KEY') ?: getenv('GOOGLE_API_KEY');
 $aiResult = null;
 
 if (!empty($geminiApiKey)) {
