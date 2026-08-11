@@ -117,22 +117,7 @@ CivicConnect/
 
 ---
 
-## 📸 Screenshots
 
-_Add screenshots here after uploading the project._
-
-```markdown
-### Home Page
-![Home Page](screenshots/home.png)
-
-### Report Issue
-![Report Issue](screenshots/report-issue.png)
-
-### Admin Dashboard
-![Admin Dashboard](screenshots/admin-dashboard.png)
-```
-
----
 
 ## 🎯 Future Improvements
 
