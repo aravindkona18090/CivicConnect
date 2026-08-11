@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['name'];
+            $_SESSION['username'] = !empty($user['username']) ? $user['username'] : (!empty($user['name']) ? $user['name'] : 'Citizen');
             $_SESSION['user_email'] = $user['email'];
 
             header("Location: peopledashboard.php"); // redirect to dashboard

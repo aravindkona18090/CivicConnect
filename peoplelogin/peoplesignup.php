@@ -7,11 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email      = trim($_POST['emailSign']);
     $mobile     = trim($_POST['mobile']);
     $password   = trim($_POST['createPass']);
-    $confirmpwd = trim($_POST['confirmPass']);
+    $confirmpwd = isset($_POST['confirmPass']) ? trim($_POST['confirmPass']) : $password;
 
-    // Check password match
+    // Check password match if confirm password field was provided
     if ($password !== $confirmpwd) {
-        header("Location: login.php?error=Passwords+do+not+match");
+        header("Location: login.php?error2=" . urlencode("Passwords do not match"));
         exit();
     }
 
