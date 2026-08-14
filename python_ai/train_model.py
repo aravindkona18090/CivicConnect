@@ -76,8 +76,12 @@ def build_training_dataset():
     X = []
     y = []
     
-    # 1. Load real images from images/ directory & uploads/
+    # 1. Load real images from datasets/, images/ directory & uploads/
     img_files = (
+        glob.glob("datasets/pathholes/annotated-images/*.jpg") +
+        glob.glob("datasets/Garbage classification/Garbage classification/*/*.jpg") +
+        glob.glob("datasets/streetlights/*.jpg") + glob.glob("datasets/streetlights/*.jpeg") +
+        glob.glob("datasets/drainage/*.jpg") + glob.glob("datasets/drainage/*.jpeg") +
         glob.glob("images/*.jpg") + glob.glob("images/*.jpeg") + glob.glob("images/*.png") + 
         glob.glob("uploads/*.jpg") + glob.glob("uploads/*.jpeg") + glob.glob("uploads/*.png")
     )
@@ -85,120 +89,36 @@ def build_training_dataset():
     for fpath in img_files:
         feat = extract_image_features(fpath)
         if feat is not None:
-            fn = fpath.lower()
+            fn = fpath.lower().replace('\\', '/')
             if any(k in fn for k in ['pothole', 'pathhole', 'road', 'crack', 'asphalt', '502561495', '1414347687']):
-                for _ in range(100): # Strongly weight real road pothole samples
-                    X.append(feat)
-                    y.append(0)
-            elif any(k in fn for k in ['garbage', 'trash', 'waste', 'dump', '1074493878', '1489051648']):
-                for _ in range(50):
-                    X.append(feat)
-                    y.append(1)
-            elif any(k in fn for k in ['light', 'lamp', 'pole', '155382228']):
-                for _ in range(50):
+                X.append(feat)
+                y.append(0)
+            elif any(k in fn for k in ['garbage', 'trash', 'waste', 'dump', 'cardboard', 'glass', 'metal', 'paper', 'plastic', '1074493878', '1489051648']):
+                X.append(feat)
+                y.append(1)
+            elif any(k in fn for k in ['light', 'lamp', 'pole', 'streetlight', '155382228']):
+                for _ in range(5):
                     X.append(feat)
                     y.append(2)
-            elif any(k in fn for k in ['water', 'drain', 'leak', '1437819039']):
-                for _ in range(50):
+            elif any(k in fn for k in ['water', 'drain', 'leak', 'flood', '1437819039']):
+                for _ in range(5):
                     X.append(feat)
                     y.append(3)
 
-    # 2. Synthetic Dataset Calibrated for Flyover/Street Pothole Scenes
-    np.random.seed(42)
-    
-    # Class 0: Roads & Potholes (Road surface crop brightness < 155, road_color_diff < 32, road edge texture > 20)
-    for _ in range(600):
-        base_grey = np.random.uniform(30, 140)
-        r = base_grey + np.random.normal(0, 8) # Full image can have trees/sky
-        g = base_grey + np.random.normal(0, 8)
-        b = base_grey + np.random.normal(0, 8)
-        r_std, g_std, b_std = np.random.uniform(25, 85, 3)
-        full_color_diff = np.random.uniform(5, 35)
-        
-        # Road crop is dark grey asphalt
-        road_r = base_grey + np.random.normal(0, 3)
-        road_g = base_grey + np.random.normal(0, 3)
-        road_b = base_grey + np.random.normal(0, 3)
-        road_color_diff = np.random.uniform(0.5, 20.0) # LOW color diff in road area
-        road_brightness = base_grey
-        road_edge = np.random.uniform(20, 90)
-        
-        edge_density = np.random.uniform(20, 85)
-        edge_std = np.random.uniform(20, 65)
-        center_edge = np.random.uniform(25, 95)
-        center_color = base_grey - np.random.uniform(5, 35)
-        hist = np.random.dirichlet([5, 4, 3, 2, 1, 1, 1, 1])
-        feat = np.array([r, g, b, r_std, g_std, b_std, full_color_diff, road_r, road_g, road_b, road_color_diff, road_brightness, road_edge, edge_density, edge_std, center_edge, center_color] + list(hist))
-        X.append(feat)
-        y.append(0)
+    # Boost streetlight and drainage real image samples
+    for fpath in glob.glob("images/*light*") + glob.glob("images/*pole*"):
+        feat = extract_image_features(fpath)
+        if feat is not None:
+            for _ in range(50):
+                X.append(feat)
+                y.append(2)
 
-    # Class 1: Sanitation & Garbage (Road crop has high color diff > 35, multi-color trash)
-    for _ in range(500):
-        r = np.random.uniform(110, 190)
-        g = np.random.uniform(120, 180)
-        b = np.random.uniform(30, 120)
-        r_std, g_std, b_std = np.random.uniform(45, 95, 3)
-        full_color_diff = np.random.uniform(40.0, 120.0)
-        
-        road_r = np.random.uniform(110, 180)
-        road_g = np.random.uniform(120, 180)
-        road_b = np.random.uniform(30, 120)
-        road_color_diff = np.random.uniform(35.0, 110.0) # HIGH color diff in garbage area
-        road_brightness = np.random.uniform(110, 170)
-        road_edge = np.random.uniform(45, 100)
-        
-        edge_density = np.random.uniform(45, 100)
-        edge_std = np.random.uniform(40, 85)
-        center_edge = np.random.uniform(50, 105)
-        center_color = np.random.uniform(100, 170)
-        hist = np.random.dirichlet([1, 2, 4, 4, 3, 2, 1, 1])
-        feat = np.array([r, g, b, r_std, g_std, b_std, full_color_diff, road_r, road_g, road_b, road_color_diff, road_brightness, road_edge, edge_density, edge_std, center_edge, center_color] + list(hist))
-        X.append(feat)
-        y.append(1)
-
-    # Class 2: Electricity & Streetlights
-    for _ in range(500):
-        r = np.random.uniform(170, 245)
-        g = np.random.uniform(170, 240)
-        b = np.random.uniform(150, 235)
-        r_std, g_std, b_std = np.random.uniform(15, 45, 3)
-        full_color_diff = np.random.uniform(10, 30)
-        
-        road_r, road_g, road_b = r, g, b
-        road_color_diff = full_color_diff
-        road_brightness = np.random.uniform(170, 245)
-        road_edge = np.random.uniform(10, 40)
-        
-        edge_density = np.random.uniform(10, 40)
-        edge_std = np.random.uniform(10, 35)
-        center_edge = np.random.uniform(10, 45)
-        center_color = np.random.uniform(180, 255)
-        hist = np.random.dirichlet([1, 1, 1, 2, 3, 4, 5, 6])
-        feat = np.array([r, g, b, r_std, g_std, b_std, full_color_diff, road_r, road_g, road_b, road_color_diff, road_brightness, road_edge, edge_density, edge_std, center_edge, center_color] + list(hist))
-        X.append(feat)
-        y.append(2)
-
-    # Class 3: Drainage & Water Leakage
-    for _ in range(500):
-        r = np.random.uniform(30, 85)
-        g = np.random.uniform(85, 140)
-        b = np.random.uniform(145, 230)
-        r_std, g_std, b_std = np.random.uniform(10, 40, 3)
-        full_color_diff = np.random.uniform(55, 115)
-        
-        road_r, road_g, road_b = r, g, b
-        road_color_diff = full_color_diff
-        road_brightness = np.random.uniform(80, 150)
-        road_edge = np.random.uniform(5, 30)
-        
-        edge_density = np.random.uniform(5, 30)
-        edge_std = np.random.uniform(5, 25)
-        center_edge = np.random.uniform(5, 30)
-        center_color = np.random.uniform(70, 150)
-        hist = np.random.dirichlet([2, 3, 4, 5, 2, 1, 1, 1])
-        feat = np.array([r, g, b, r_std, g_std, b_std, full_color_diff, road_r, road_g, road_b, road_color_diff, road_brightness, road_edge, edge_density, edge_std, center_edge, center_color] + list(hist))
-        X.append(feat)
-        y.append(3)
+    for fpath in glob.glob("images/*water*") + glob.glob("images/*drain*"):
+        feat = extract_image_features(fpath)
+        if feat is not None:
+            for _ in range(50):
+                X.append(feat)
+                y.append(3)
 
     return np.array(X), np.array(y)
 

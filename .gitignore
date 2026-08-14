@@ -1,0 +1,26 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+python_ai/__pycache__/
+
+# Datasets and heavy models
+datasets/
+
+# Uploads
+uploads/*.jpg
+uploads/*.jpeg
+uploads/*.png
+uploads/*.webp
+uploads/after_photos/*.jpg
+uploads/after_photos/*.jpeg
+uploads/after_photos/*.png
+uploads/after_photos/*.webp
+!uploads/.gitkeep
+!uploads/after_photos/.gitkeep
+
+# Environment and IDE
+.env
+.vscode/
+.idea/

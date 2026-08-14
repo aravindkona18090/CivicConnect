@@ -1,7 +1,9 @@
 import sys
 import os
-import io
 import json
+
+# Ensure project root is in sys.path when invoked from PHP/XAMPP
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Try loading PyTorch Deep Learning Classifier
 DEEP_LEARNING_AVAILABLE = False
@@ -28,10 +30,10 @@ if os.path.exists(MODEL_PATH):
         pass
 
 CATEGORIES_MAP = {
-    0: ("Roads & Potholes", "AI Model analyzed road surface pixels: Severe pothole, road surface degradation, or asphalt crack detected.", "High"),
-    1: ("Sanitation & Garbage", "AI Model analyzed image pixels: Uncleared garbage accumulation and waste material detected.", "Medium"),
-    2: ("Electricity & Streetlights", "AI Model analyzed image pixels: Electrical pole hazard or dark streetlight fixture detected.", "Medium"),
-    3: ("Drainage & Water Leakage", "AI Model analyzed image pixels: Standing water, pipe leakage, or overflowing drainage detected.", "Critical")
+    0: ("Roads & Potholes", "Severe pothole and damaged road surface detected, posing potential hazard to commuters.", "High"),
+    1: ("Sanitation & Garbage", "Accumulated municipal garbage dump and uncollected waste requiring immediate sanitation disposal.", "Medium"),
+    2: ("Electricity & Streetlights", "Faulty streetlight fixture or electrical pole hazard requiring inspection and maintenance.", "Medium"),
+    3: ("Drainage & Water Leakage", "Severe water leakage, overflowing drainage, or road waterlogging requiring municipal repair.", "Critical")
 }
 
 def extract_features(image_bytes_or_path):
@@ -99,15 +101,6 @@ def analyze_photo(image_path, orig_name=""):
         # 2. Secondary: Scikit-Learn Visual Machine Learning Model
         feat, road_color_diff, road_brightness = extract_features(image_path)
         
-        if road_color_diff < 35 and road_brightness < 210:
-            return json.dumps({
-                "success": True,
-                "category": "Roads & Potholes",
-                "severity": "High",
-                "description": "AI Visual Engine analyzed road surface pixels: Severe pothole, road surface degradation, or asphalt crack detected.",
-                "source": "Scikit-Learn Visual AI Model (Road Surface Analyzer)"
-            })
-            
         if feat is not None and ML_MODEL is not None:
             pred_class = int(ML_MODEL.predict(feat)[0])
             cat, desc, sev = CATEGORIES_MAP.get(pred_class, ("Roads & Potholes", "Road surface damage detected.", "High"))
