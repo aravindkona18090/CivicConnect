@@ -637,5 +637,6 @@ setInterval(() => {
     track.style.transform = `translateX(${-index * 300}px)`;
 }, 3000);
 </script>
+<?php include("includes/chatbot_widget.php"); ?>
 </body>
 </html>
