@@ -689,10 +689,17 @@ tbody tr:hover { background: #fbfdff; }
                                 </span>
                             </td>
                             <td style="text-align: right;">
-                                <a href="task_details.php?id=<?php echo $problem['id']; ?>" class="btn-inspect">
-                                    <span><?php echo $isCompleted ? 'View Archive' : 'Inspect & Resolve'; ?></span>
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </a>
+                                <div style="display:inline-flex; align-items:center; gap:8px;">
+                                    <?php if (!empty($problem['lat']) && !empty($problem['lng'])): ?>
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $problem['lat']; ?>,<?php echo $problem['lng']; ?>" target="_blank" class="btn-inspect" style="background:#0284c7; box-shadow:0 2px 6px rgba(2,132,199,0.25);" title="Open Live GPS Route Navigation">
+                                            <i class="fa-solid fa-diamond-turn-right"></i> Navigate
+                                        </a>
+                                    <?php endif; ?>
+                                    <a href="task_details.php?id=<?php echo $problem['id']; ?>" class="btn-inspect">
+                                        <span><?php echo $isCompleted ? 'View Archive' : 'Inspect & Resolve'; ?></span>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
