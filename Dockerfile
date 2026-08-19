@@ -1,18 +1,15 @@
-FROM php:8.2-apache
+FROM dunglas/frankenphp:php8.2
 
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip
+RUN install-php-extensions mysqli pdo_mysql
+
+WORKDIR /app
+
+COPY . /app
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
-
-WORKDIR /var/www/html
-
-COPY . .
-
 RUN composer install --no-dev --optimize-autoloader
 
-EXPOSE 80
+EXPOSE 8080
+
+CMD ["frankenphp", "run", "--listen", ":8080"]
