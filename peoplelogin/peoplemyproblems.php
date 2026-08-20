@@ -238,6 +238,7 @@ tbody tr:hover {
   <nav>
     <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> <?php echo $lang[$selectedLang]['dashboard'] ?? 'Dashboard'; ?></a>
     <a href="peoplemyproblems.php" style="color:var(--primary);"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Complaints'; ?></a>
+    <a href="peoplekarma.php"><i class="fa-solid fa-trophy"></i> Civic Karma</a>
     <a href="peopleprofile.php"><i class="fa-solid fa-user"></i> <?php echo $lang[$selectedLang]['profile'] ?? 'Profile'; ?></a>
     <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> <?php echo $lang[$selectedLang]['logout'] ?? 'Logout'; ?></a>
   </nav>
@@ -258,9 +259,25 @@ tbody tr:hover {
     </div>
     <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:20px;">Track the real-time status of your reported municipal issues, assigned officers, and resolution proof photos.</p>
 
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+        <!-- Status Filter Tabs -->
+        <div style="display:flex; gap:6px; background:#fff; padding:4px; border-radius:12px; border:1px solid var(--border-color);">
+            <button type="button" class="filter-tab active" onclick="filterCitizenRows('all', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:#0284c7; color:#fff;">All</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('Pending', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">Pending</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('In Progress', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">In Progress</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('Completed', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">Resolved</button>
+        </div>
+
+        <!-- Search Input -->
+        <div style="position:relative; width:280px;">
+            <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:11px; color:var(--text-muted); font-size:0.85rem;"></i>
+            <input type="text" id="citizenSearch" placeholder="Search by ID, area, category..." onkeyup="filterCitizenSearch()" style="width:100%; padding:8px 12px 8px 34px; border:1.5px solid var(--border-color); border-radius:10px; font-size:0.85rem; font-family:inherit; outline:none;">
+        </div>
+    </div>
+
     <div class="table-card">
         <?php if ($problems_result && mysqli_num_rows($problems_result) > 0): ?>
-            <table>
+            <table id="citizenComplaintsTable">
                 <thead>
                     <tr>
                         <th>ID & Category</th>
@@ -275,8 +292,9 @@ tbody tr:hover {
                         $st = $row['status'] ?? 'Pending';
                         $stClass = $st==='Completed'?'status-completed':($st==='In Progress'?'status-inprogress':'status-pending');
                         $stIcon = $st==='Completed'?'fa-circle-check':($st==='In Progress'?'fa-spinner fa-spin':'fa-clock');
+                        $searchBlob = strtolower($row['id'] . ' ' . $row['category'] . ' ' . $row['description'] . ' ' . $row['street'] . ' ' . ($row['area'] ?? '') . ' ' . ($row['worker_name'] ?? ''));
                     ?>
-                        <tr>
+                        <tr class="problem-record-row" data-status="<?php echo $st; ?>" data-search="<?php echo htmlspecialchars($searchBlob); ?>">
                             <td>
                                 <strong>#<?php echo $row['id']; ?></strong><br>
                                 <span style="background:#e0f2fe; color:#0369a1; padding:3px 8px; border-radius:6px; font-weight:700; font-size:0.8rem; display:inline-block; margin-top:4px;">
@@ -315,9 +333,12 @@ tbody tr:hover {
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <span class="badge-status <?php echo $stClass; ?>">
+                                <span class="badge-status <?php echo $stClass; ?>" style="margin-bottom:6px; display:inline-flex;">
                                     <i class="fa-solid <?php echo $stIcon; ?>"></i> <?php echo $st; ?>
-                                </span>
+                                </span><br>
+                                <a href="print_complaint.php?id=<?php echo $row['id']; ?>" target="_blank" style="display:inline-flex; align-items:center; gap:4px; font-size:0.75rem; font-weight:700; color:#2563eb; text-decoration:none; padding:4px 8px; border-radius:6px; background:#eff6ff; border:1px solid #bfdbfe;">
+                                    <i class="fa-solid fa-print"></i> Slip
+                                </a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -343,6 +364,45 @@ tbody tr:hover {
 </div>
 
 <script>
+let activeStatusFilter = 'all';
+
+function filterCitizenRows(status, btn) {
+    activeStatusFilter = status;
+    document.querySelectorAll('.filter-tab').forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'transparent';
+        b.style.color = 'var(--text-muted)';
+    });
+    if (btn) {
+        btn.classList.add('active');
+        btn.style.background = '#0284c7';
+        btn.style.color = '#fff';
+    }
+    applyCitizenFilters();
+}
+
+function filterCitizenSearch() {
+    applyCitizenFilters();
+}
+
+function applyCitizenFilters() {
+    const term = (document.getElementById('citizenSearch')?.value || '').toLowerCase().trim();
+    const rows = document.querySelectorAll('.problem-record-row');
+
+    rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status') || '';
+        const rowSearch = row.getAttribute('data-search') || '';
+
+        const matchesStatus = (activeStatusFilter === 'all' || rowStatus === activeStatusFilter);
+        const matchesTerm = (!term || rowSearch.includes(term));
+
+        if (matchesStatus && matchesTerm) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
 function zoomPhoto(src, title) {
     document.getElementById('modalImg').src = src;
     document.getElementById('modalTitle').innerText = title || 'Inspection Photo';
