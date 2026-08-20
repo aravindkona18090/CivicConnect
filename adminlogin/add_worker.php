@@ -23,13 +23,16 @@ function sendWelcomeEmail($to, $name, $password)
     try {
         //Server settings
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+        $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'civicconnect24@gmail.com'; // Your email
-        $mail->Password = 'hzvoclkhjbzaqocy'; // Your app password
+        $mail->Username = getenv('MAIL_USERNAME');
+        $mail->Password = getenv('MAIL_PASSWORD');
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
+        $mail->Timeout = 10;
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = 'html';
         $mail->setFrom('civicconnect24@gmail.com', 'CivicConnect');
         $mail->addAddress($to);
         $mail->isHTML(true);
