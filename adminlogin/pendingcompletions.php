@@ -2,10 +2,9 @@
 session_start();
 include("../db/connection.php");
 
-// Load PHPMailer
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 require __DIR__ . '/../vendor/autoload.php';
+
+use Resend;
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
@@ -15,56 +14,71 @@ if (!isset($_SESSION['admin_id'])) {
 
 // Handle completion toggle
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_completed'])) {
+
     $problem_id = intval($_POST['problem_id']);
     $completed = $_POST['value'] === '1' ? 1 : 0;
 
     if ($completed) {
+
         mysqli_query($conn, "UPDATE problems SET status='Completed', completed_at=NOW() WHERE id='$problem_id'");
-        $user_query = mysqli_query($conn, "SELECT p.description, p.category, p.street, u.username, u.email 
-                                           FROM problems p 
-                                           JOIN people u ON p.user_id = u.id 
-                                           WHERE p.id='$problem_id'");
+
+        $user_query = mysqli_query($conn, "
+            SELECT
+                p.description,
+                p.category,
+                p.street,
+                u.username,
+                u.email
+            FROM problems p
+            JOIN people u ON p.user_id = u.id
+            WHERE p.id='$problem_id'
+        ");
+
         if ($user_query && mysqli_num_rows($user_query) > 0) {
+
             $row = mysqli_fetch_assoc($user_query);
-            $user_name = $row['username'];
+
+            $user_name  = $row['username'];
             $user_email = $row['email'];
-            $desc = $row['description'];
-            $category = $row['category'];
-            $street = $row['street'];
+            $desc       = $row['description'];
+            $category   = $row['category'];
+            $street     = $row['street'];
 
             try {
-                $mail = new PHPMailer(true);
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = getenv('MAIL_USERNAME');
-                $mail->Password = getenv('MAIL_PASSWORD');
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
 
-                $mail->Timeout = 10;
-                $mail->SMTPDebug = 2;
-                $mail->Debugoutput = 'html';
+                $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-                $mail->setFrom('civicconnectmailer@gmail.com', 'CivicConnect');
-                $mail->addAddress($user_email, $user_name);
+                $resend->emails->send([
+                    'from' => 'CivicConnect <onboarding@resend.dev>',
+                    'to' => [$user_email],
+                    'subject' => '✅ CivicConnect - Problem Completed',
+                    'html' => "
+                        <h2>Dear {$user_name},</h2>
 
-                $mail->isHTML(true);
-                $mail->Subject = "✅ CivicConnect - Problem Completed";
-                $mail->Body = "<h2>Dear " . htmlspecialchars($user_name) . ",</h2>
-                    <p>Your reported problem has been <strong>marked as completed</strong>.</p>
-                    <ul>
-                        <li><strong>Description:</strong> " . htmlspecialchars($desc) . "</li>
-                        <li><strong>Category:</strong> " . htmlspecialchars($category) . "</li>
-                        <li><strong>Location:</strong> " . htmlspecialchars($street) . "</li>
-                    </ul>
-                    <p>Thank you for helping improve your community! 🎉</p>
-                    <p>Regards,<br>CivicConnect Team</p>";
-                $mail->send();
-            } catch (Exception $e) {}
+                        <p>Your reported problem has been
+                        <strong>marked as completed</strong>.</p>
+
+                        <ul>
+                            <li><strong>Description:</strong> {$desc}</li>
+                            <li><strong>Category:</strong> {$category}</li>
+                            <li><strong>Location:</strong> {$street}</li>
+                        </ul>
+
+                        <p>Thank you for helping improve your community! 🎉</p>
+
+                        <p>Regards,<br>CivicConnect Team</p>
+                    "
+                ]);
+
+            } catch (\Exception $e) {
+                error_log("Resend Error: " . $e->getMessage());
+            }
         }
+
     } else {
+
         mysqli_query($conn, "UPDATE problems SET status='In Progress', completed_at=NULL WHERE id='$problem_id'");
+
     }
 
     header("Location: pendingcompletions.php");
@@ -74,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_completed'])) 
 // Fetch problems in progress
 $problems_query = "SELECT * FROM problems WHERE status='In Progress' ORDER BY allocated_at DESC";
 $problems_result = mysqli_query($conn, $problems_query);
+
 $pageTitle = "Pending Problem Completions ✅";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

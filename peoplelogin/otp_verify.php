@@ -1,44 +1,49 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 include("../db/connection.php");
+
 require __DIR__ . '/../vendor/autoload.php';
-// Include PHPMailer via Composer autoload
+
+use Resend;
 
 session_start();
-
 // Function to send OTP using PHPMailer
 function sendOtp($email, $otp)
 {
-  $mail = new PHPMailer(true);
 
   try {
-    // SMTP server configuration
-    $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = getenv('MAIL_USERNAME');
-        $mail->Password = getenv('MAIL_PASSWORD');
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
 
-        $mail->Timeout = 10;
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
+    $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-    $mail->setFrom('civicconnect24@gmail.com', 'CivicConnect');
-    $mail->addAddress($email);
+    $resend->emails->send([
+        'from' => 'CivicConnect <onboarding@resend.dev>',
+        'to' => [$email],
+        'subject' => 'Your OTP for Verification',
+        'html' => "
+            <h2>Hello,</h2>
 
-    $mail->isHTML(true);
-    $mail->Subject = 'Your OTP for Verification';
-    $mail->Body = "Hello,<br>Your OTP for verification is: <b>$otp</b><br>Please do not share this OTP.";
+            <p>Your OTP for verification is:</p>
 
-    $mail->send();
+            <h1>{$otp}</h1>
+
+            <p><strong>Please do not share this OTP with anyone.</strong></p>
+
+            <p>This OTP is valid for 5 minutes.</p>
+
+            <br>
+
+            <p>Regards,<br>CivicConnect Team</p>
+        "
+    ]);
+
     return true;
-  } catch (Exception $e) {
-    error_log("PHPMailer Error: " . $mail->ErrorInfo);
+
+} catch (\Exception $e) {
+
+    error_log("Resend Error: " . $e->getMessage());
+
     return false;
-  }
+
+}
 }
 $home = false;
 // Handle form submissions
@@ -84,42 +89,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $hashed_password = $_GET['password'];
           $phone = $_GET['phone'];
           try {
-            $mail = new PHPMailer(true);
-            // SMTP s$mail = new PHPMailer(true);
-            $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = getenv('MAIL_USERNAME');
-        $mail->Password = getenv('MAIL_PASSWORD');
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
 
-        $mail->Timeout = 10;
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
+    $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-            $mail->setFrom('civicconnect24@gmail.com', 'CivicConnect');
-            $mail->addAddress($email);
-            $mail->isHTML(true);
-            $mail->Subject = "CivicConnect Registration Successful - Start Making a Difference!";
-            $mail->Body = "
-    <h2>Dear User,</h2>
-    <p>You have successfully registered on <strong>CivicConnect</strong>. Welcome to our community!</p>
-    <h3>Account Details:</h3>
-    <ul>
-        <li><strong>Registered Email:</strong> $email</li>
-    </ul>
-    <p>Thank you for joining <strong>CivicConnect</strong>, your platform to report and track government-related issues, raise concerns, and contribute to community improvement.</p>
-    <p>With CivicConnect, you can easily submit complaints, monitor their progress, and work together with others for a better society.</p>
-    <p>If you have any questions, feel free to reach out to us at civicconnect24@gmail.com.</p>
-    <p>Let's build a better community together!</p>
-    <p>Regards,<br>CivicConnect Team</p>";
+    $resend->emails->send([
+        'from' => 'CivicConnect <onboarding@resend.dev>',
+        'to' => [$email],
+        'subject' => 'CivicConnect Registration Successful - Start Making a Difference!',
+        'html' => "
+            <h2>Dear User,</h2>
 
+            <p>You have successfully registered on <strong>CivicConnect</strong>. Welcome to our community!</p>
 
-            $mail->send();
-          } catch (Exception $e) {
-            $errorMessage = "Error sending email: {$mail->ErrorInfo}";
-          }
+            <h3>Account Details:</h3>
+
+            <ul>
+                <li><strong>Registered Email:</strong> {$email}</li>
+            </ul>
+
+            <p>Thank you for joining <strong>CivicConnect</strong>, your platform to report and track government-related issues, raise concerns, and contribute to community improvement.</p>
+
+            <p>With CivicConnect, you can easily submit complaints, monitor their progress, and work together with others for a better society.</p>
+
+            <p>If you have any questions, feel free to reach out to us.</p>
+
+            <p>Let's build a better community together!</p>
+
+            <p>Regards,<br>CivicConnect Team</p>
+        "
+    ]);
+
+} catch (\Exception $e) {
+
+    $errorMessage = "Error sending email: " . $e->getMessage();
+    error_log("Resend Error: " . $e->getMessage());
+
+}
           $sql = "INSERT INTO people (username, email, password, mobile) VALUES ('$username', '$email', '$hashed_password', '$phone')";
           $conn->query($sql);
         }

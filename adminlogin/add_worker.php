@@ -2,13 +2,9 @@
 session_start();
 include('../db/connection.php');
 
-// Include PHPMailer classes
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+require __DIR__ . '/../vendor/autoload.php';
 
-require '../PHPMailer/src/Exception.php';
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
+use Resend;
 
 // Check admin login
 if (!isset($_SESSION['admin_id'])) {
@@ -19,39 +15,35 @@ if (!isset($_SESSION['admin_id'])) {
 // Function to send email via PHPMailer
 function sendWelcomeEmail($to, $name, $password)
 {
-    $mail = new PHPMailer(true);
     try {
-        //Server settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = getenv('MAIL_USERNAME');
-        $mail->Password = getenv('MAIL_PASSWORD');
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $resend = Resend::client(getenv('RESEND_API_KEY'));
 
-        $mail->Timeout = 10;
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
-        $mail->setFrom('civicconnect24@gmail.com', 'CivicConnect');
-        $mail->addAddress($to);
-        $mail->isHTML(true);
-        $mail->Subject = 'Welcome to Worker Portal';
-        $mail->Body = "
-        <h3>Hi $name,</h3>
-        <p>Your worker account has been created successfully.</p>
-        <p><b>Email:</b> $to<br>
-        <b>Password:</b> $password</p>
-        <p>Please change your password after first login.<br>
-        Work efficiently and responsibly!</p>
-        <br>
-        <p>Regards,<br>Admin Team</p>
-        ";
+        $resend->emails->send([
+            'from' => 'CivicConnect <onboarding@resend.dev>',
+            'to' => [$to],
+            'subject' => 'Welcome to Worker Portal',
+            'html' => "
+                <h3>Hi {$name},</h3>
+                <p>Your worker account has been created successfully.</p>
 
-        $mail->send();
-        // echo 'Message has been sent';
+                <p>
+                    <b>Email:</b> {$to}<br>
+                    <b>Password:</b> {$password}
+                </p>
+
+                <p>Please change your password after your first login.</p>
+
+                <br>
+
+                <p>Regards,<br>CivicConnect Admin Team</p>
+            "
+        ]);
+
+        return true;
+
     } catch (Exception $e) {
-        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        error_log($e->getMessage());
+        return false;
     }
 }
 
