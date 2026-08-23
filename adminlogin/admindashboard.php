@@ -637,8 +637,13 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
                 <h1><i class="fa-solid fa-user-shield" style="color:var(--brand-primary);"></i> Municipal Command Center</h1>
                 <p>Monitor real-time city infrastructure issues, dispatch field officers, and inspect verified resolutions.</p>
             </div>
-            <div class="admin-badge-chip">
-                <i class="fa-solid fa-circle-check" style="color:var(--brand-emerald);"></i> Logged in as: <?php echo htmlspecialchars($adminName); ?>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <a href="export_reports.php" class="btn-inspect" style="background:#059669; box-shadow:0 2px 8px rgba(5,150,105,0.25);" title="Download CSV/Excel Report">
+                    <i class="fa-solid fa-file-excel"></i> Export Reports
+                </a>
+                <div class="admin-badge-chip">
+                    <i class="fa-solid fa-circle-check" style="color:var(--brand-emerald);"></i> Logged in as: <?php echo htmlspecialchars($adminName); ?>
+                </div>
             </div>
         </div>
 
@@ -673,6 +678,39 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
                 <div>
                     <div class="metric-val"><?php echo $workers_cnt; ?></div>
                     <div class="metric-lbl">Field Officers</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUNICIPAL EFFICIENCY KPI SUMMARY BAR -->
+        <div style="background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 24px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:42px; height:42px; border-radius:10px; background:#eff6ff; color:#2563eb; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <div>
+                    <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Resolution Efficiency</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:#0f172a;"><?php echo $total_cnt > 0 ? round(($completed_cnt / $total_cnt) * 100, 1) : 0; ?>% Overall Solved</div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:42px; height:42px; border-radius:10px; background:#f0fdf4; color:#059669; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div>
+                    <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Avg Response Target</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:#0f172a;">< 24 Hours</div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:42px; height:42px; border-radius:10px; background:#faf5ff; color:#7c3aed; display:flex; align-items:center; justify-content:center; font-size:1.2rem;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Active City Ward</div>
+                    <div style="font-size:1.15rem; font-weight:800; color:#0f172a;">Bengaluru Central</div>
                 </div>
             </div>
         </div>
