@@ -4,7 +4,7 @@ include('../db/connection.php');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Resend;
+
 
 // Check admin login
 if (!isset($_SESSION['admin_id'])) {

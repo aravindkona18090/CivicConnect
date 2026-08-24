@@ -4,7 +4,7 @@
 include("../db/connection.php");
 require __DIR__ . '/../vendor/autoload.php';
 
-use Resend;
+
 function sendUserMail($to, $name, $subject, $body)
 {
     try {

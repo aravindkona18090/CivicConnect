@@ -4,8 +4,6 @@ include("../db/connection.php");
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Resend;
-
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header("Location: adminlogin.php");

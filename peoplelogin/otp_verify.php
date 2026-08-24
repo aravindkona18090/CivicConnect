@@ -3,7 +3,7 @@ include("../db/connection.php");
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Resend;
+
 
 session_start();
 // Function to send OTP using PHPMailer
