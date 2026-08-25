@@ -1,265 +1,330 @@
 <?php
 session_start();
 include("../db/connection.php");
+include("../lang.php");
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: adminlogin.php");
+    header("Location: login.php");
     exit();
 }
 
 // Handle completion toggle
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_completed'])) {
-
     $problem_id = intval($_POST['problem_id']);
     $completed = $_POST['value'] === '1' ? 1 : 0;
 
     if ($completed) {
-
         mysqli_query($conn, "UPDATE problems SET status='Completed', completed_at=NOW() WHERE id='$problem_id'");
 
         $user_query = mysqli_query($conn, "
-            SELECT
-                p.description,
-                p.category,
-                p.street,
-                u.username,
-                u.email
+            SELECT p.description, p.category, p.street, u.username, u.email
             FROM problems p
             JOIN people u ON p.user_id = u.id
             WHERE p.id='$problem_id'
         ");
 
         if ($user_query && mysqli_num_rows($user_query) > 0) {
-
             $row = mysqli_fetch_assoc($user_query);
-
-            $user_name  = $row['username'];
-            $user_email = $row['email'];
-            $desc       = $row['description'];
-            $category   = $row['category'];
-            $street     = $row['street'];
-
             try {
-
-                $resend = Resend::client(getenv('RESEND_API_KEY'));
-
-                $resend->emails->send([
-                    'from' => 'CivicConnect <onboarding@resend.dev>',
-                    'to' => [$user_email],
-                    'subject' => '✅ CivicConnect - Problem Completed',
-                    'html' => "
-                        <h2>Dear {$user_name},</h2>
-
-                        <p>Your reported problem has been
-                        <strong>marked as completed</strong>.</p>
-
-                        <ul>
-                            <li><strong>Description:</strong> {$desc}</li>
-                            <li><strong>Category:</strong> {$category}</li>
-                            <li><strong>Location:</strong> {$street}</li>
-                        </ul>
-
-                        <p>Thank you for helping improve your community! 🎉</p>
-
-                        <p>Regards,<br>CivicConnect Team</p>
-                    "
-                ]);
-
+                if (class_exists('Resend')) {
+                    $resend = Resend::client(getenv('RESEND_API_KEY'));
+                    $resend->emails->send([
+                        'from' => 'CivicConnect <onboarding@resend.dev>',
+                        'to' => [$row['email']],
+                        'subject' => '✅ CivicConnect - Problem Completed',
+                        'html' => "<h2>Dear {$row['username']},</h2><p>Your reported problem ({$row['description']}) has been <strong>Marked as Completed</strong>.</p><p>Thank you for helping improve your community! 🎉</p>"
+                    ]);
+                }
             } catch (\Exception $e) {
                 error_log("Resend Error: " . $e->getMessage());
             }
         }
-
     } else {
-
         mysqli_query($conn, "UPDATE problems SET status='In Progress', completed_at=NULL WHERE id='$problem_id'");
-
     }
 
     header("Location: pendingcompletions.php");
     exit();
 }
 
-// Fetch problems in progress
-$problems_query = "SELECT * FROM problems WHERE status='In Progress' ORDER BY allocated_at DESC";
-$problems_result = mysqli_query($conn, $problems_query);
-
-$pageTitle = "Pending Problem Completions ✅";
+// Fetch In Progress complaints
+$query = "SELECT * FROM problems WHERE status='In Progress' ORDER BY created_at DESC";
+$result = mysqli_query($conn, $query);
+$adminName = $_SESSION['adminname'] ?? 'Administrator';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $selectedLang; ?>">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?php echo $pageTitle; ?></title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #e8f0fe;
-    color: #0056b3;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Verification - Admin Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-primary: #0284c7;
+            --brand-emerald: #10b981;
+            --bg-canvas: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
 
-/* Header & nav */
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0,0,0,0.7);
-    padding: 20px 30px;
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    backdrop-filter: blur(8px);
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-header h1 {
-    margin: 0 0 15px 0;
-    font-size: 28px;
-    color: #fff;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
 
-nav a {
-    padding: 8px 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    color: #fff;
-    background: #0056b3;
-    transition: 0.3s;
-}
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
-nav a:hover {
-    background: #00408a;
-}
+        .brand-badge {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
 
-/* Main content */
-main {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 10px;
-}
+        .brand-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .brand-title span { color: var(--brand-primary); }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #0056b3;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-/* Cards */
-.card {
-    background: rgba(255,255,255,0.15);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    backdrop-filter: blur(8px);
-    transition: transform 0.3s;
-}
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.card:hover {
-    transform: translateY(-5px);
-}
+        .nav-link:hover, .nav-link.active {
+            background: #f0f9ff;
+            color: var(--brand-primary);
+        }
 
-.card img, .clickable-image {
-    max-width: 200px;
-    border-radius: 5px;
-    display: block;
-    margin-top: 5px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-.clickable-image:hover {
-    transform: scale(1.05);
-}
+        .lang-select {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            font-family: inherit;
+            background: #fff;
+            color: var(--text-main);
+            cursor: pointer;
+            outline: none;
+        }
 
-.status {
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    margin-top: 5px;
-    background: #ffeaa7;
-}
+        .logout-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
 
-/* Buttons */
-button {
-    padding: 8px 16px;
-    margin-top: 5px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
+        .container {
+            max-width: 1280px;
+            margin: 32px auto;
+            padding: 0 24px;
+        }
 
-button:hover { background: #0056b3; }
-form { display: inline-block; margin-right: 5px; }
-</style>
+        .page-header {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .complaint-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 160px 1fr 200px;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .photo-wrapper {
+            width: 100%;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-toggle {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mark-done { background: #10b981; color: #fff; }
+        .btn-mark-done:hover { background: #059669; }
+        .btn-reopen { background: #fef3c7; color: #b45309; }
+
+        .empty-state {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 60px;
+            text-align: center;
+            border: 1px dashed var(--border);
+            color: var(--text-muted);
+        }
+    </style>
 </head>
 <body>
 
-<header>
-    <h1><?php echo $pageTitle; ?></h1>
-    <nav>
-        <a href="admindashboard.php">Dashboard</a>
-        <a href="pendingcompletions.php">Pending Completions</a>
-        <a href="allproblems.php">All Problems</a>
-        <a href="completedproblems.php">Completed Problems</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
-</header>
+    <header class="navbar">
+        <a href="admindashboard.php" class="nav-brand">
+            <div class="brand-badge"><i class="fa-solid fa-handshake-angle"></i></div>
+            <div class="brand-title">Civic<span>Connect</span></div>
+        </a>
 
-<main>
-    <h2>Problems Awaiting Completion</h2>
+        <nav class="nav-links">
+            <a href="admindashboard.php" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="pendingcompletions.php" class="nav-link active"><i class="fa-solid fa-clock"></i> In Progress Work</a>
+            <a href="allproblems.php" class="nav-link"><i class="fa-solid fa-list-check"></i> All Complaints</a>
+            <a href="completedproblems.php" class="nav-link"><i class="fa-solid fa-circle-check"></i> Completed</a>
+        </nav>
 
-    <?php if (mysqli_num_rows($problems_result) > 0): ?>
-        <?php while ($problem = mysqli_fetch_assoc($problems_result)): ?>
-            <div class="card">
-                <p><strong>ID:</strong> <?php echo $problem['id']; ?></p>
-                <p><strong>Description:</strong> <?php echo htmlspecialchars($problem['description']); ?></p>
-                <p><strong>Category:</strong> <?php echo htmlspecialchars($problem['category']); ?></p>
-                <p><strong>Location:</strong>
-                    <?php echo htmlspecialchars($problem['street'] . ', ' . $problem['area'] . ', ' . $problem['city'] . ' - ' . $problem['pincode']); ?>
-                </p>
-                <?php if (!empty($problem['photo'])): ?>
-                    <p><strong>Before Photo:</strong><br>
-                        <img src="<?php echo $problem['photo']; ?>" alt="Before Photo" class="clickable-image">
-                    </p>
-                <?php endif; ?>
+        <div class="nav-actions">
+            <form method="POST" style="margin:0;">
+                <select name="language" onchange="this.form.submit()" class="lang-select" title="Select Language">
+                    <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
+                    <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
+                    <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
+                    <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
+                </select>
+            </form>
+            <a href="../logout.php" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </header>
 
-                <?php if (!empty($problem['after_photo'])): ?>
-                    <p><strong>After Photo:</strong><br>
-                        <img src="<?php echo $problem['after_photo']; ?>" alt="After Photo" class="clickable-image">
-                    </p>
-                <?php endif; ?>
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fa-solid fa-gears" style="color:var(--brand-primary);"></i> Active In Progress Work Orders</h1>
+        </div>
 
-                <p class="status"><?php echo $problem['status']; ?></p>
+        <?php if ($result && mysqli_num_rows($result) > 0): ?>
+            <?php while ($p = mysqli_fetch_assoc($result)): ?>
+                <div class="complaint-card">
+                    <div class="photo-wrapper">
+                        <?php if (!empty($p['photo'])): ?>
+                            <img src="<?php echo htmlspecialchars($p['photo']); ?>" alt="Photo">
+                        <?php else: ?>
+                            <div style="display:flex; height:100%; align-items:center; justify-content:center; color:#94a3b8; font-size:0.8rem;">No Photo</div>
+                        <?php endif; ?>
+                    </div>
 
-                <form method="POST">
-                    <input type="hidden" name="problem_id" value="<?php echo $problem['id']; ?>">
-                    <input type="hidden" name="value" value="1">
-                    <button type="submit" name="toggle_completed">Mark Completed</button>
-                </form>
+                    <div>
+                        <div style="display:flex; gap:10px; margin-bottom:8px;">
+                            <span style="font-weight:800; color:#475569;">ID #<?php echo $p['id']; ?></span>
+                            <span style="font-weight:700; color:var(--brand-primary);"><?php echo htmlspecialchars($p['category']); ?></span>
+                        </div>
+                        <div style="font-weight:700; font-size:1.05rem; margin-bottom:6px;"><?php echo htmlspecialchars($p['description']); ?></div>
+                        <div style="font-size:0.85rem; color:#64748b;"><i class="fa-solid fa-location-dot"></i> <?php echo htmlspecialchars($p['street'] . ', ' . $p['city']); ?></div>
+                    </div>
+
+                    <div>
+                        <form method="POST">
+                            <input type="hidden" name="problem_id" value="<?php echo $p['id']; ?>">
+                            <input type="hidden" name="toggle_completed" value="1">
+                            <input type="hidden" name="value" value="1">
+                            <button type="submit" class="btn-toggle btn-mark-done">
+                                <i class="fa-solid fa-check-double"></i> Mark Completed
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="empty-state">
+                <i class="fa-solid fa-circle-check" style="font-size:3rem; color:#cbd5e1; margin-bottom:12px;"></i>
+                <h3>No Active In Progress Work Orders</h3>
+                <p>All allocated issues are currently completed.</p>
             </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p style="text-align:center;">No problems awaiting completion.</p>
-    <?php endif; ?>
-</main>
+        <?php endif; ?>
+    </div>
 
 </body>
 </html>

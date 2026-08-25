@@ -2,191 +2,244 @@
 session_start();
 include('../db/connection.php');
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: adminlogin.php");
+    header("Location: login.php");
     exit();
 }
 
-// Fetch all problems
-$query = "
-    SELECT id, user_id, description, category, street, area, city, pincode, 
-           photo, status, created_at
-    FROM problems
-    ORDER BY created_at DESC
-";
+$query = "SELECT * FROM problems ORDER BY created_at DESC";
 $result = mysqli_query($conn, $query);
-$pageTitle = "Admin Dashboard - All Problems";
+$adminName = $_SESSION['adminname'] ?? 'Administrator';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?php echo $pageTitle; ?></title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #e8f0fe;
-    color: #0056b3;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Complaints - Admin Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-primary: #0284c7;
+            --brand-emerald: #10b981;
+            --bg-canvas: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --radius: 16px;
+        }
 
-/* Header */
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0,0,0,0.7);
-    padding: 20px 30px;
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    backdrop-filter: blur(8px);
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-header h1 {
-    margin: 0 0 15px 0;
-    font-size: 28px;
-    color: #fff;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-canvas);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
 
-nav a {
-    padding: 8px 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    color: #fff;
-    background: #0056b3;
-    transition: 0.3s;
-}
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
 
-nav a:hover {
-    background: #00408a;
-}
+        .brand-badge {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+        }
 
-/* Main content */
-main {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 10px;
-}
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .brand-title span { color: var(--brand-primary); }
 
-/* Card-like table rows */
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 12px;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
+        }
 
-th {
-    text-align: left;
-    padding: 12px;
-    font-weight: 600;
-    color: #fff;
-    background: #0056b3;
-    border-radius: 8px 8px 0 0;
-}
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-td {
-    padding: 12px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 8px;
-}
+        .nav-link:hover { color: var(--text-main); }
 
-tr td:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
+        .nav-link.active {
+            background: #ffffff;
+            color: var(--brand-primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
 
-tr td:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
+        .logout-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
 
-tr:hover td {
-    background: rgba(255,255,255,0.25);
-}
+        .container {
+            max-width: 1280px;
+            margin: 32px auto;
+            padding: 0 24px;
+        }
 
-img {
-    max-width: 100px;
-    border-radius: 5px;
-}
+        .page-header {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-/* Responsive */
-@media (max-width: 768px) {
-    table, thead, tbody, th, td, tr { display: block; }
-    th { position: sticky; top: 0; }
-    td { border: none; padding: 10px 5px; }
-}
-</style>
+        .page-header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .complaints-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .complaint-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 160px 1fr 180px;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .photo-wrapper {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+            display: inline-block;
+        }
+        .status-Pending { background: #fef3c7; color: #b45309; }
+        .status-InProgress { background: #e0f2fe; color: #0369a1; }
+        .status-Completed { background: #d1fae5; color: #065f46; }
+    </style>
 </head>
 <body>
 
-<header>
-    <h1><?php echo $pageTitle; ?></h1>
-    <nav>
-        <a href="admindashboard.php">Dashboard</a>
-        <a href="pendingcompletions.php">Pending Completions</a>
-        <a href="allproblems.php">All Problems</a>
-        <a href="completedproblems.php">Completed Problems</a>
-        <a href="../logout.php">Logout</a>
-    </nav>
-</header>
+    <header class="navbar">
+        <a href="admindashboard.php" class="nav-brand">
+            <div class="brand-badge"><i class="fa-solid fa-handshake-angle"></i></div>
+            <div class="brand-title">Civic<span>Connect</span></div>
+        </a>
 
-<main>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Location</th>
-                <th>Photo</th>
-                <th>Status</th>
-                <th>Reported At</th>
-            </tr>
-        </thead>
-        <tbody>
+        <nav class="nav-links">
+            <a href="admindashboard.php" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+            <a href="allproblems.php" class="nav-link active"><i class="fa-solid fa-list-check"></i> All Complaints</a>
+            <a href="completedproblems.php" class="nav-link"><i class="fa-solid fa-circle-check"></i> Completed Archive</a>
+            <a href="workers.php" class="nav-link"><i class="fa-solid fa-hard-hat"></i> Field Officers</a>
+        </nav>
+
+        <a href="../logout.php" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fa-solid fa-list-check" style="color:var(--brand-primary);"></i> Master Registry of All Civic Complaints</h1>
+        </div>
+
+        <div class="complaints-list">
             <?php if (mysqli_num_rows($result) > 0): ?>
-                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo htmlspecialchars($row['description']); ?></td>
-                        <td><?php echo htmlspecialchars($row['category']); ?></td>
-                        <td><?php echo htmlspecialchars($row['street'] . ', ' . $row['area'] . ', ' . $row['city'] . ' - ' . $row['pincode']); ?></td>
-                        <td>
-                            <?php if (!empty($row['photo'])): ?>
-                                <?php
-                                $photoPath = $row['photo'];
-                                if (str_starts_with($photoPath, "../")) {
-                                    $photoPath = substr($photoPath, 3);
-                                }
-                                $photoURL = '../' . $photoPath;
-                                ?>
-                                <img src="<?php echo htmlspecialchars($photoURL); ?>" alt="Problem Photo">
+                <?php while ($p = mysqli_fetch_assoc($result)): 
+                    $st = str_replace(' ', '', $p['status']);
+                ?>
+                    <div class="complaint-card">
+                        <div class="photo-wrapper">
+                            <?php if (!empty($p['photo'])): ?>
+                                <img src="<?php echo htmlspecialchars($p['photo']); ?>" alt="Photo">
                             <?php else: ?>
-                                N/A
+                                <div style="display:flex; height:100%; align-items:center; justify-content:center; color:#94a3b8; font-size:0.8rem;">No Photo</div>
                             <?php endif; ?>
-                        </td>
-                        <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['created_at']; ?></td>
-                    </tr>
+                        </div>
+
+                        <div>
+                            <div style="display:flex; gap:10px; margin-bottom:8px;">
+                                <span style="font-weight:800; color:#475569;">#<?php echo $p['id']; ?></span>
+                                <span style="font-weight:700; color:var(--brand-primary);"><?php echo htmlspecialchars($p['category']); ?></span>
+                            </div>
+                            <div style="font-weight:700; font-size:1.05rem; margin-bottom:6px;"><?php echo htmlspecialchars($p['description']); ?></div>
+                            <div style="font-size:0.85rem; color:#64748b;"><i class="fa-solid fa-location-dot"></i> <?php echo htmlspecialchars($p['street'] . ', ' . $p['city']); ?></div>
+                            <div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;"><i class="fa-solid fa-clock"></i> Reported: <?php echo $p['created_at']; ?></div>
+                        </div>
+
+                        <div style="text-align:right;">
+                            <span class="badge-status status-<?php echo $st; ?>"><?php echo htmlspecialchars($p['status']); ?></span>
+                        </div>
+                    </div>
                 <?php endwhile; ?>
             <?php else: ?>
-                <tr><td colspan="7" style="text-align:center;">No problems reported yet</td></tr>
+                <p style="text-align:center; padding:40px; color:#64748b;">No complaints found in system database.</p>
             <?php endif; ?>
-        </tbody>
-    </table>
-</main>
+        </div>
+    </div>
 
 </body>
 </html>
