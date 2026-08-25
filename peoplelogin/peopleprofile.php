@@ -174,21 +174,24 @@ p { margin: 5px 0; font-weight: 500; }
 <body>
 
 <header>
-    <h1><?php echo $lang[$selectedLang]['welcome']; ?>, <?php echo htmlspecialchars($user['name'] ?? 'User'); ?> 👋</h1>
-    <nav>
-        <a href="peopledashboard.php"><?php echo $lang[$selectedLang]['dashboard']; ?></a>
-        <a href="peoplemyproblems.php"><?php echo $lang[$selectedLang]['my_problems']; ?></a>
-        <a href="peopleprofile.php"><?php echo $lang[$selectedLang]['profile']; ?></a>
-        <a href="../logout.php"><?php echo $lang[$selectedLang]['logout']; ?></a>
-    </nav>
-    <form method="POST" style="display:inline;">
-        <select name="language" onchange="this.form.submit()">
-            <option value="en" <?php if($selectedLang=='en') echo 'selected'; ?>>English</option>
-            <option value="te" <?php if($selectedLang=='te') echo 'selected'; ?>>తెలుగు</option>
-            <option value="hn" <?php if($selectedLang=='hn') echo 'selected'; ?>>हिंदी</option>
-            <option value="kn" <?php if($selectedLang=='kn') echo 'selected'; ?>>ಕನ್ನಡ</option>
-        </select>
-    </form>
+  <a href="../index.php" class="logo-group" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+    <div class="logo-badge" style="width:40px; height:40px; background:linear-gradient(135deg, #10b981 0%, #0284c7 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.1rem; box-shadow:0 4px 14px rgba(16, 185, 129, 0.35);"><i class="fa-solid fa-handshake"></i></div>
+    <span class="logo-title" style="font-size:1.3rem; font-weight:800; color:#0f172a;">Civic<span style="color:#0284c7;">Connect</span></span>
+  </a>
+  <nav>
+    <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> <?php echo $lang[$selectedLang]['dashboard'] ?? 'Dashboard'; ?></a>
+    <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Problems'; ?></a>
+    <a href="peopleprofile.php"><i class="fa-solid fa-user"></i> <?php echo $lang[$selectedLang]['profile'] ?? 'Profile'; ?></a>
+    <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> <?php echo $lang[$selectedLang]['logout'] ?? 'Logout'; ?></a>
+  </nav>
+  <form method="POST" style="display:inline-flex; align-items:center; gap:6px;">
+    <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:8px; border:1px solid #cbd5e1; font-weight:600; font-family:inherit; cursor:pointer;" title="Select Language">
+      <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
+      <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
+      <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
+      <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
+    </select>
+  </form>
 </header>
 
 <main>
