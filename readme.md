@@ -56,7 +56,7 @@ CivicConnect utilizes a robust **Dual-Engine AI Vision System**:
 
 ### 2. Database Setup
 1. Open phpMyAdmin (`http://localhost/phpmyadmin/`).
-2. Create a database named `gov_problems`.
+2. Create a database named `civicconnect`.
 3. Import the database schema from `civicconnect.sql`.
 
 ### 3. Environment Configuration

@@ -3,7 +3,7 @@
 $servername = getenv("MYSQLHOST") ?: "localhost";
 $username   = getenv("MYSQLUSER") ?: "root";
 $password   = getenv("MYSQLPASSWORD") ?: "";
-$dbname     = getenv("MYSQLDATABASE") ?: "gov_problems";
+$dbname     = getenv("MYSQLDATABASE") ?: "civicconnect";
 $port       = getenv("MYSQLPORT") ?: 3306;
 
 // Create connection
