@@ -39,13 +39,15 @@ function analyzeWithGemini($tmpPath, $apiKey, $fileExt) {
     if ($fileExt === 'png') $mimeType = 'image/png';
     elseif ($fileExt === 'webp') $mimeType = 'image/webp';
 
-    $models = ['gemma-4-31b-it', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    $models = ['gemini-3.6-flash', 'gemini-3.7-flash', 'gemini-flash-latest', 'gemini-3.5-flash'];
     
-    $prompt = "You are a Municipal Vision AI Engine. Analyze this civic complaint photo.
-    Return ONLY a raw JSON object with these exact keys:
-    - 'category': Choose ONE from ['Roads & Potholes', 'Sanitation & Garbage', 'Streetlight Failure', 'Drainage & Water Leakage', 'Public Safety & Infrastructure'].
-    - 'description': A formal 1-2 sentence description of the civic problem in the photo.
-    - 'severity': Choose ONE from ['Low', 'Medium', 'High', 'Critical'].";
+    $prompt = "You are an intelligent Municipal Vision AI Engine for CivicConnect. Carefully analyze this civic complaint photo.
+    Return ONLY a valid JSON object without markdown formatting:
+    {
+      \"category\": \"Choose exact ONE from: 'Roads & Potholes', 'Sanitation & Garbage', 'Electricity & Streetlights', 'Drainage & Water Leakage'\",
+      \"severity\": \"Choose exact ONE from: 'Low', 'Medium', 'High', 'Critical'\",
+      \"description\": \"Write an accurate, human-like 1-2 sentence description of the exact civic problem shown in this photo.\"
+    }";
 
     $payload = [
         "contents" => [
@@ -135,7 +137,7 @@ function analyzeWithDirectPythonXAMPP($tmpPath, $fileName = "") {
 
 // EXECUTION HIERARCHY:
 // 1. Google Cloud Vision AI (Primary) -> 2. Local Trained ML Model -> 3. XAMPP Backup Engine
-$geminiApiKey = getenv('GEMINI_API_KEY') ?: getenv('GOOGLE_API_KEY');
+$geminiApiKey = getenv('GEMINI_API_KEY') ?: getenv('GOOGLE_API_KEY') ?: '';
 $aiResult = null;
 
 if (!empty($geminiApiKey)) {
