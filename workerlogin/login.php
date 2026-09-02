@@ -99,6 +99,14 @@ $error = $_GET['error'] ?? '';
                 <p><?php echo $lang[$selectedLang]['worker_welcome']; ?></p>
             </div>
             
+            <?php 
+            $msg = $_GET['msg'] ?? '';
+            if(!empty($msg)): ?>
+                <div style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 12px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; text-align: center;">
+                    <i class="fa-solid fa-circle-check"></i> <?php echo htmlspecialchars($msg); ?>
+                </div>
+            <?php endif; ?>
+
             <?php if(!empty($error)): ?>
                 <div class="alert-error">
                     <i class="fa-solid fa-triangle-exclamation"></i> <?php echo htmlspecialchars($error); ?>
@@ -108,8 +116,8 @@ $error = $_GET['error'] ?? '';
             <form action="workerlogin.php" method="POST" autocomplete="off">
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-icon"><i class="fa-solid fa-user"></i></div>
-                        <input type="text" id="username" name="username" required placeholder="Worker ID / Username">
+                        <div class="input-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <input type="text" id="login_id" name="login_id" required placeholder="Officer Email, Username, or ID">
                     </div>
                 </div>
 
@@ -117,6 +125,11 @@ $error = $_GET['error'] ?? '';
                     <div class="input-group">
                         <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
                         <input type="password" id="password" name="password" required placeholder="Password">
+                    </div>
+                    <div style="text-align: right; margin-top: 8px;">
+                        <a href="forgot_password.php" style="color: var(--emerald-primary); font-weight: 700; font-size: 0.85rem; text-decoration: none;">
+                            <i class="fa-solid fa-key" style="font-size: 0.75rem;"></i> Forgot / Change Password?
+                        </a>
                     </div>
                 </div>
 
