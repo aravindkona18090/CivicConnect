@@ -480,14 +480,19 @@ select:focus, input[type="text"]:focus, textarea:focus {
 
 <!-- Header -->
 <header>
-  <a href="../index.php" class="logo-group">
-    <div class="logo-badge"><i class="fa-solid fa-handshake"></i></div>
+  <a href="peopledashboard.php" class="logo-group">
+    <div class="logo-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22S20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="rgba(255,255,255,0.25)" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
     <span class="logo-title">Civic<span style="color:#0284c7;">Connect</span></span>
   </a>
   
   <nav>
     <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> <?php echo $lang[$selectedLang]['dashboard'] ?? 'Dashboard'; ?></a>
-    <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Problems'; ?></a>
+    <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Complaints'; ?></a>
     <a href="peopleprofile.php"><i class="fa-solid fa-user"></i> <?php echo $lang[$selectedLang]['profile'] ?? 'Profile'; ?></a>
     <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> <?php echo $lang[$selectedLang]['logout'] ?? 'Logout'; ?></a>
   </nav>
@@ -820,5 +825,6 @@ $(document).ready(function(){
 });
 </script>
 
+<?php include("../includes/chatbot_widget.php"); ?>
 </body>
 </html>

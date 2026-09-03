@@ -534,7 +534,12 @@ tbody tr:hover { background: #fbfdff; }
 
 <header>
     <a href="workerdashboard.php" class="logo-group">
-        <div class="logo-badge"><i class="fa-solid fa-handshake"></i></div>
+        <div class="logo-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22S20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="rgba(255,255,255,0.25)" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <span class="logo-title">Civic<span style="color:#059669;">Connect</span> Officer Portal</span>
     </a>
     <div class="user-profile">
