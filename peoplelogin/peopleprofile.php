@@ -172,6 +172,15 @@ $displayName = !empty($user['name']) ? $user['name'] : (!empty($user['username']
 $initial = strtoupper(substr($displayName, 0, 1));
 $joinDate = !empty($user['created_at']) ? date('M d, Y', strtotime($user['created_at'])) : 'Aug 14, 2026';
 
+$avatarSrc = '';
+if (!empty($user['profile_pic'])) {
+    if (strpos($user['profile_pic'], 'http') === 0) {
+        $avatarSrc = $user['profile_pic'];
+    } elseif (file_exists("../" . $user['profile_pic'])) {
+        $avatarSrc = "../" . $user['profile_pic'];
+    }
+}
+
 // Count total reported problems
 $cnt_res = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM problems WHERE user_id='$user_id'");
 $reported_count = mysqli_fetch_assoc($cnt_res)['cnt'] ?? 0;
@@ -737,8 +746,8 @@ main {
                     <input type="hidden" name="quick_avatar_upload" value="1">
                     
                     <div class="avatar-floating-wrap">
-                        <?php if (!empty($user['profile_pic']) && file_exists("../" . $user['profile_pic'])): ?>
-                            <img src="../<?php echo htmlspecialchars($user['profile_pic']); ?>" alt="Profile Avatar" class="avatar-large-img">
+                        <?php if (!empty($avatarSrc)): ?>
+                            <img src="<?php echo htmlspecialchars($avatarSrc); ?>" alt="Profile Avatar" class="avatar-large-img">
                         <?php else: ?>
                             <div class="avatar-large-initial"><?php echo $initial; ?></div>
                         <?php endif; ?>
@@ -917,8 +926,8 @@ main {
                 <!-- Large Avatar Form Uploader -->
                 <div class="avatar-form-uploader">
                     <div class="avatar-floating-wrap">
-                        <?php if (!empty($user['profile_pic']) && file_exists("../" . $user['profile_pic'])): ?>
-                            <img id="formAvatarPreview" src="../<?php echo htmlspecialchars($user['profile_pic']); ?>" alt="Profile Preview" class="avatar-large-img">
+                        <?php if (!empty($avatarSrc)): ?>
+                            <img id="formAvatarPreview" src="<?php echo htmlspecialchars($avatarSrc); ?>" alt="Profile Preview" class="avatar-large-img">
                         <?php else: ?>
                             <div id="formAvatarInit" class="avatar-large-initial"><?php echo $initial; ?></div>
                             <img id="formAvatarPreview" src="" alt="Profile Preview" class="avatar-large-img" style="display:none;">
