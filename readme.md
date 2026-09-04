@@ -1,84 +1,130 @@
-# 🏛️ CivicConnect - AI-Powered Municipal Grievance & Civic Infrastructure Platform
+# 🏛️ CivicConnect — AI-Powered Smart City Grievance & Municipal Infrastructure Platform
 
-[![PHP](https://img.shields.io/badge/Backend-PHP%208.x-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
-[![PyTorch](https://img.shields.io/badge/AI-PyTorch%20MobileNetV3-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Google Gemini](https://img.shields.io/badge/Cloud%20AI-Google%20Gemma--4--31B-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)](https://ai.google.dev/)
-[![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-
-**CivicConnect** is a modern, full-stack municipal management system designed to streamline citizen issue reporting, automated AI damage classification, field officer task assignment, and transparent resolution tracking.
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Deployment-civicconnect--qlwi.onrender.com-00C7B7?style=for-the-badge&logo=render&logoColor=white)](https://civicconnect-qlwi.onrender.com/)
+[![Database](https://img.shields.io/badge/Database-TiDB_Cloud_Serverless_MySQL-00758F?style=for-the-badge&logo=mysql&logoColor=white)](https://tidbcloud.com/)
+[![AI Vision & Chat](https://img.shields.io/badge/AI-Google_Gemini_2.5-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Auth](https://img.shields.io/badge/Auth-Google_OAuth_2.0_%2B_Brevo_OTP-EA4335?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/identity)
+[![GIS](https://img.shields.io/badge/GIS_Maps-Leaflet_%2B_OpenStreetMap-199900?style=for-the-badge&logo=openstreetmap&logoColor=white)](https://leafletjs.com/)
+[![Status](https://img.shields.io/badge/Uptime-24%2F7_Monitored-brightgreen?style=for-the-badge&logo=uptimerobot&logoColor=white)](https://civicconnect-qlwi.onrender.com/)
 
 ---
 
-## ✨ Key Features
+## 🌐 Live Production URL
+👉 **[https://civicconnect-qlwi.onrender.com/](https://civicconnect-qlwi.onrender.com/)**
+
+> **CivicConnect** is an enterprise-grade, full-stack municipal management and civic engagement platform. It empowers citizens to report urban issues, leverages **Google Gemini Multimodal Vision AI** to automatically verify and categorize damage severity, dispatches field officers with **1-click GPS routing**, and enables administrative oversight through an interactive **City-Wide GIS Command Center**.
+
+---
+
+## ✨ Key Platform Features
 
 ### 👤 1. Citizen Portal (`/peoplelogin`)
-- **Smart Problem Reporting**: Citizens upload photos of civic issues (potholes, garbage dumps, broken streetlights).
-- **Automated AI Categorization**: Auto-detects category and computes risk severity (*Low, Medium, High, Critical*).
-- **GPS Location Pinning**: Automatically captures precise street address and map coordinates.
-- **My Complaints Tracker**: Real-time status timeline (*Pending, In Progress, Completed*).
+- **Multimodal AI Grievance Reporting**: Citizens capture/upload civic damage (potholes, garbage, broken streetlights, sewage leaks).
+- **Google Gemini 2.5 Vision AI**: Instantly classifies problem categories, detects severity (*Low, Medium, High, Critical*), and filters out fake/blurry uploads.
+- **🎙️ Multilingual Voice AI Assistant (CivicBot)**:
+  - **Speech-to-Text (`SpeechRecognition`)**: Speak complaints naturally in **Telugu (తెలుగు), Hindi (हिंदी), Kannada (ಕನ್ನಡ), or English**.
+  - **Text-to-Speech (`SpeechSynthesis`)**: Reads out responses in a natural female Indic voice with continuous sentence queueing and emoji sanitation.
+- **🔐 Google One-Tap & Brevo OTP Authentication**: 1-click Google Sign-In and secure 4-digit auto-advancing email verification.
+- **🏆 Civic Karma Gamification (`peoplekarma.php`)**: Earn XP points, unlock badges (*Civic Guardian, City Champion*), and compete on city leaderboards.
+- **🧾 Printable Municipal Acknowledgment Slip (`print_complaint.php`)**: Generates official government receipts with scan-to-track QR codes.
+- **🔍 Instant AJAX Search & Status Filter Toolbar**: Live filter complaints by status (*Pending, In Progress, Resolved*) or search term.
+- **⭐ 5-Star Resolution Rating & Reviews**: Citizens rate field officer resolution quality upon completion.
 
-### 🛡️ 2. Admin Command Center (`/adminlogin`)
-- **Unified Management Queue**: Combines Pending Verification and Active In-Progress work orders into one interactive data grid.
-- **Dedicated Inspection Page (`problem_details.php`)**: Full-page inspection view with side-by-side **Before** (Citizen Report) vs **After** (Field Worker Proof) photo comparison.
-- **Interactive Field Officer Assignment**: Select and assign registered field officers with 1-click automated email work orders.
-- **Instant Search & Filter Tabs**: Filter active queue by status (*All Active, Pending Only, In Progress Only*) or live text search.
-- **Field Officer Registry (`workers.php`)**: Manually verify and add new field workers with auto-generated secure passwords emailed directly to the worker.
+---
+
+### 🛡️ 2. Municipal Admin Command Center (`/adminlogin`)
+- **🗺️ Live Interactive GIS Command Map**: Powered by **Leaflet.js & OpenStreetMap** with color-coded status pins, category icons, and inspection popups.
+- **📊 Municipal Efficiency & KPI Analytics**: Real-time resolution rate trackers, average response time metrics, and active ward summaries.
+- **Dedicated Inspection Deck (`problem_details.php`)**: Full-page inspection view with side-by-side **Before** (Citizen Report) vs **After** (Field Worker Proof) comparison.
+- **Field Officer Dispatch Registry (`workers.php` / `add_worker.php`)**: Register field officers with automated welcome emails and credentials.
+- **📥 CSV & Excel Municipal Report Exporter (`export_reports.php`)**: Filter and export complete grievance datasets for city council audits.
+
+---
 
 ### 👷 3. Field Officer Portal (`/workerlogin`)
-- **Assigned Task Board**: View assigned work orders, citizen complaint details, and navigation map coordinates.
-- **Completion Proof Upload**: Upload an **After (Fixed) Photo** upon resolving the issue to notify administration and citizens.
+- **Assigned Work Orders Dashboard**: Clean task board with citizen details, severity flags, and location markers.
+- **📍 1-Click Turn-by-Turn GPS Route Navigation**: Direct Google Maps driving directions to the exact GPS coordinates.
+- **Resolution Proof Submission**: Upload verified **After (Fixed) Photos** to notify administration and citizens instantly.
 
 ---
 
-## 🤖 Dual-Engine AI Vision Integration
+## 🤖 AI & Technology Architecture
 
-CivicConnect utilizes a robust **Dual-Engine AI Vision System**:
-
-1. **Cloud Vision AI (Primary)**: Uses **Google Gemma** via Structured JSON Mode (`response_mime_type: application/json`) to analyze image context, determine civic categories, and calculate urgency severity.
-2. **Local Neural Network (Fallback)**: Uses **PyTorch MobileNetV3** (`deep_vision.py`) pre-trained on deep convolutional feature layers. Operates 100% offline without requiring external API access.
-
----
-
-## 🛠️ Technology Stack
-
-- **Frontend**: HTML5, Vanilla CSS3 (Custom Glassmorphism Design Tokens, Micro-animations), JavaScript, FontAwesome 6, Google Fonts (Plus Jakarta Sans).
-- **Backend**: PHP 8.x, Composer, Resend Email API.
-- **Database**: MySQL / MariaDB (`civicconnect.sql`).
-- **AI / Machine Learning**: Python 3.13, PyTorch (`torch`, `torchvision`), Google Generative AI REST API.
-
----
-
-## 🚀 Quick Setup & Installation
-
-### 1. Prerequisites
-- XAMPP / WAMP server with PHP 8.x and MySQL enabled.
-- Python 3.10+ with `torch` and `torchvision` installed (`pip install torch torchvision`).
-
-### 2. Database Setup
-1. Open phpMyAdmin (`http://localhost/phpmyadmin/`).
-2. Create a database named `civicconnect`.
-3. Import the database schema from `civicconnect.sql`.
-
-### 3. Environment Configuration
-Set the following environment variables on your server or system:
-```bash
-# Google Cloud Vision / Gemini API Key
-setx GEMINI_API_KEY "YOUR_GOOGLE_GEMINI_API_KEY"
-
-# Resend Mailer API Key (Optional for live email notifications)
-setx RESEND_API_KEY "YOUR_RESEND_API_KEY"
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           CIVICCONNECT ARCHITECTURE                     │
+├──────────────────┬───────────────────────┬──────────────────────────────┤
+│  Frontend / UI   │    Backend & APIs     │   Cloud & AI Infrastructure  │
+│  ─────────────   │    ──────────────     │   ─────────────────────────  │
+│  • HTML5 / CSS3  │ • PHP 8.2 (Modular)   │ • Google Gemini AI (Vision)  │
+│  • Plus Jakarta  │ • Google OAuth 2.0    │ • TiDB Cloud Serverless (DB) │
+│  • Leaflet GIS   │ • Brevo Email API v3  │ • Render Cloud (Web Hosting) │
+│  • Web Speech    │ • Prepared Statements │ • UptimeRobot (Zero-Sleep)   │
+└──────────────────┴───────────────────────┴──────────────────────────────┘
 ```
 
-### 4. Default Login Credentials
+---
 
-#### 🛡️ Admin Portal (`http://localhost/CivicConnect/adminlogin/login.php`)
-- **Username / Email**: `admin` or `civicconnect24@gmail.com`
-- **Password**: `admin123`
+## 🛠️ Complete Tech Stack
 
-#### 👷 Field Officer Portal (`http://localhost/CivicConnect/workerlogin/login.php`)
-- Credentials are auto-generated when added by the Administrator.
+* **Hosting & Deployment**: [Render](https://render.com/) (CI/CD connected to GitHub `main` branch).
+* **Database**: [TiDB Cloud Serverless MySQL](https://tidbcloud.com/) on AWS (SSL encrypted, 5GB storage, 24/7 permanent uptime).
+* **Uptime Monitoring**: [UptimeRobot](https://uptimerobot.com/) (Pings every 5 minutes to eliminate cold-start delays).
+* **Artificial Intelligence**: Google Gemini 2.5 Flash & Vision REST APIs.
+* **Voice & Audio**: Web Speech API (`SpeechRecognition` + `SpeechSynthesis`).
+* **GIS & Maps**: Leaflet.js, OpenStreetMap Cartography Tiles, HTML5 Geolocation API.
+* **Authentication**: Google Identity Services (OAuth 2.0 / One-Tap) & Brevo Transactional Email API v3.
+* **Backend**: PHP 8.x, Composer, PHPMailer, cURL.
+* **Frontend**: Vanilla HTML5, CSS3 Glassmorphism tokens, JavaScript (ES6+), FontAwesome 6, Plus Jakarta Sans.
+
+---
+
+## 🚀 Local Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/aravindkona18090/CivicConnect.git
+cd CivicConnect
+```
+
+### 2. Configure Environment (`.env`)
+Create a `.env` file in the project root:
+```env
+# Google OAuth 2.0 Client ID
+GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+
+# Google Gemini AI Key
+GEMINI_API_KEY=your_gemini_api_key
+
+# TiDB Cloud / MySQL Database Configuration
+MYSQLHOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+MYSQLPORT=4000
+MYSQLUSER=your_db_username
+MYSQLPASSWORD=your_db_password
+MYSQLDATABASE=test
+
+# Brevo Email API v3
+BREVO_API_KEY=xkeysib-your_brevo_api_key
+BREVO_SENDER_EMAIL=your_email@gmail.com
+BREVO_SENDER_NAME=CivicConnect
+```
+
+### 3. Run Locally on XAMPP
+1. Move the project to `c:/xampp/htdocs/CivicConnect`.
+2. Start **Apache** and **MySQL** in XAMPP Control Panel.
+3. Open in your browser: `http://localhost/CivicConnect/`.
+
+---
+
+## 🔑 Default Demo Credentials
+
+| Portal | URL | Username / Email | Password |
+| :--- | :--- | :--- | :--- |
+| **🛡️ Municipal Admin** | [`/adminlogin/login.php`](https://civicconnect-qlwi.onrender.com/adminlogin/login.php) | `admin` | `admin123` |
+| **👤 Citizen Portal** | [`/peoplelogin/login.php`](https://civicconnect-qlwi.onrender.com/peoplelogin/login.php) | `konaaravind18@gmail.com` | `password123` |
+| **👷 Field Officer** | [`/workerlogin/login.php`](https://civicconnect-qlwi.onrender.com/workerlogin/login.php) | `suresh.sanitation@civicconnect.gov` | `password123` |
 
 ---
 
 ## 📜 License
-Developed for Municipal Infrastructure & Civic Community Enhancement.
+Developed for Smart City Infrastructure Redressal & Civic Engagement. Released under the [MIT License](LICENSE).
