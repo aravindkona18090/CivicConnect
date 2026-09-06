@@ -604,25 +604,62 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
             color: var(--text-muted);
         }
 
+        .mobile-nav-toggle {
+            display: none;
+            background: #f1f5f9;
+            border: 1.5px solid #cbd5e1;
+            color: var(--text-main);
+            font-size: 1.15rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mobile-nav-toggle:hover { background: #e2e8f0; }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* Responsive Mobile Styles */
         @media (max-width: 768px) {
+            .mobile-nav-toggle { display: flex; }
             .navbar {
                 padding: 12px 16px;
-                flex-wrap: wrap;
-                gap: 12px;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
             }
             .nav-links {
-                order: 3;
-                width: 100%;
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 4px;
-                gap: 6px;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px 16px;
+                gap: 4px;
+                animation: civicNavDown 0.2s ease forwards;
+            }
+            .nav-links.mobile-active {
+                display: flex;
             }
             .nav-link {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                white-space: nowrap;
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-size: 0.92rem;
+            }
+            .nav-link:hover {
+                background: #f1f5f9;
             }
             .welcome-bar {
                 flex-direction: column;
@@ -652,6 +689,11 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
                 min-width: 650px;
             }
         }
+
+        @keyframes civicNavDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -668,14 +710,19 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
             <div class="brand-title">Civic<span>Connect</span></div>
         </a>
 
-        <nav class="nav-links">
+        <nav class="nav-links" id="adminNav">
             <a href="admindashboard.php" class="nav-link active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
             <a href="allproblems.php" class="nav-link"><i class="fa-solid fa-list-check"></i> All Complaints</a>
             <a href="completedproblems.php" class="nav-link"><i class="fa-solid fa-circle-check"></i> Completed Archive</a>
             <a href="workers.php" class="nav-link"><i class="fa-solid fa-hard-hat"></i> Field Officers</a>
         </nav>
 
-        <a href="../logout.php" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        <div class="header-controls">
+            <a href="../logout.php" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            <button type="button" class="mobile-nav-toggle" onclick="toggleAdminNav()" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars" id="adminNavIcon"></i>
+            </button>
+        </div>
     </header>
 
     <div class="container">
@@ -1112,6 +1159,21 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
                     row.style.display = 'none';
                 }
             });
+        }
+
+        function toggleAdminNav() {
+            var nav = document.getElementById('adminNav');
+            var icon = document.getElementById('adminNavIcon');
+            if(nav) {
+                nav.classList.toggle('mobile-active');
+                if(nav.classList.contains('mobile-active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                } else {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            }
         }
     </script>
 </body>
