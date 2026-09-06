@@ -417,25 +417,8 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="portal-nav">
-        <a href="peopledashboard.php" class="nav-brand">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L3 7V12C3 17.52 6.84 22.74 12 24C17.16 22.74 21 17.52 21 12V7L12 2Z" fill="#2563eb"/>
-            </svg>
-            CivicConnect
-        </a>
-        <div class="nav-links" id="karmaNav">
-            <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> My Complaints</a>
-            <a href="peoplekarma.php" class="active"><i class="fa-solid fa-trophy"></i> Civic Karma</a>
-            <a href="peopleprofile.php"><i class="fa-solid fa-user"></i> Profile</a>
-            <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-        </div>
-        <button type="button" class="mobile-nav-toggle" onclick="toggleKarmaNav()" aria-label="Toggle Navigation">
-            <i class="fa-solid fa-bars" id="karmaNavIcon"></i>
-        </button>
-    </nav>
+    <!-- Unified Header -->
+    <?php include("../includes/citizen_header.php"); ?>
 
     <div class="karma-container">
         <!-- Hero Card -->

@@ -787,39 +787,7 @@ main {
 </head>
 <body>
 
-<header>
-  <a href="peopledashboard.php" class="logo-group">
-    <div class="logo-badge">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 22S20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="rgba(255,255,255,0.25)" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <span class="logo-title">Civic<span>Connect</span></span>
-  </a>
-
-  <nav id="citizenNav">
-    <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> <?php echo $lang[$selectedLang]['dashboard'] ?? 'Dashboard'; ?></a>
-    <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Complaints'; ?></a>
-    <a href="peoplekarma.php"><i class="fa-solid fa-trophy"></i> Civic Karma</a>
-    <a href="peopleprofile.php" class="active"><i class="fa-solid fa-user"></i> <?php echo $lang[$selectedLang]['profile'] ?? 'Profile'; ?></a>
-    <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> <?php echo $lang[$selectedLang]['logout'] ?? 'Logout'; ?></a>
-  </nav>
-
-  <div class="header-actions">
-    <a href="peopledashboard.php" class="mobile-dash-shortcut" style="display:none; text-decoration:none; background:#eff6ff; color:#0284c7; padding:6px 12px; border-radius:10px; font-weight:700; font-size:0.82rem; border:1px solid #bfdbfe; align-items:center; gap:6px;">
-        <i class="fa-solid fa-house"></i> Home
-    </a>
-    <form method="POST" style="display:inline-flex; align-items:center; gap:6px;">
-      <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:8px; border:1px solid #cbd5e1; font-weight:700; font-family:inherit; cursor:pointer;" title="Select Language">
-        <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
-        <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
-        <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
-        <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
-      </select>
-    </form>
-  </div>
-</header>
+<?php include("../includes/citizen_header.php"); ?>
 
 <main>
     <?php if (!empty($msg)): ?>
