@@ -713,67 +713,75 @@ main {
     gap: 8px;
 }
 
-@media (max-width: 768px) {
-    .mobile-nav-toggle { display: flex; }
+@media (max-width: 900px) {
     header {
-        padding: 12px 16px;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 12px 18px;
     }
-    nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        flex-direction: column;
-        align-items: stretch;
-        padding: 12px 16px;
-        gap: 4px;
-        animation: civicNavDown 0.2s ease forwards;
+    header nav {
+        display: none !important;
     }
-    nav.mobile-active {
-        display: flex;
+    .mobile-dash-shortcut {
+        display: inline-flex !important;
     }
-    nav a {
-        padding: 12px 16px;
-        border-radius: 10px;
-        font-size: 0.92rem;
+    .profile-hero-card {
+        border-radius: 18px;
+        margin-bottom: 20px;
     }
-    nav a:hover {
-        background: #f1f5f9;
+    .hero-cover {
+        height: 110px;
+    }
+    .hero-body {
+        padding: 0 18px 22px;
     }
     .hero-profile-row {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        margin-top: -55px;
+        gap: 14px;
     }
-    .hero-details-group {
-        text-align: center;
+    .avatar-floating-wrap {
+        width: 110px;
+        height: 110px;
+    }
+    .avatar-large-img, .avatar-large-initial {
+        width: 110px;
+        height: 110px;
+        font-size: 2.8rem;
+    }
+    .avatar-camera-btn-large {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+    }
+    .hero-actions {
+        width: 100%;
+    }
+    .btn-edit-main, .btn-view-main {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 18px;
     }
     .profile-tabs {
         overflow-x: auto;
         flex-wrap: nowrap;
-        padding-bottom: 6px;
+        padding: 6px;
+        gap: 6px;
+        -webkit-overflow-scrolling: touch;
     }
     .tab-btn-spacious {
-        min-width: 130px;
-        font-size: 0.85rem;
-        padding: 10px 14px;
+        min-width: 120px;
+        padding: 10px 12px;
+        font-size: 0.82rem;
         white-space: nowrap;
     }
     .profile-data-card {
         padding: 20px 16px;
+        border-radius: 16px;
     }
-}
-
-@keyframes civicNavDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+    .form-grid-wide {
+        grid-template-columns: 1fr !important;
+    }
 }
 </style>
 </head>
@@ -799,6 +807,9 @@ main {
   </nav>
 
   <div class="header-actions">
+    <a href="peopledashboard.php" class="mobile-dash-shortcut" style="display:none; text-decoration:none; background:#eff6ff; color:#0284c7; padding:6px 12px; border-radius:10px; font-weight:700; font-size:0.82rem; border:1px solid #bfdbfe; align-items:center; gap:6px;">
+        <i class="fa-solid fa-house"></i> Home
+    </a>
     <form method="POST" style="display:inline-flex; align-items:center; gap:6px;">
       <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:8px; border:1px solid #cbd5e1; font-weight:700; font-family:inherit; cursor:pointer;" title="Select Language">
         <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
@@ -807,9 +818,6 @@ main {
         <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
       </select>
     </form>
-    <button type="button" class="mobile-nav-toggle" onclick="toggleCitizenNav()" aria-label="Toggle Navigation">
-      <i class="fa-solid fa-bars" id="navToggleIcon"></i>
-    </button>
   </div>
 </header>
 

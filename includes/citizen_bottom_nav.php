@@ -14,13 +14,13 @@ $langCode = $selectedLang ?? 'en';
     left: 0;
     right: 0;
     height: 64px;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -4px 25px rgba(15, 23, 42, 0.08);
-    z-index: 9998;
-    padding: 0 8px;
+    border-top: 1.5px solid #e2e8f0;
+    box-shadow: 0 -6px 25px rgba(15, 23, 42, 0.12);
+    z-index: 999999;
+    padding: 0 6px;
 }
 
 .mobile-bottom-nav-inner {
@@ -28,7 +28,7 @@ $langCode = $selectedLang ?? 'en';
     align-items: center;
     justify-content: space-around;
     height: 100%;
-    max-width: 480px;
+    max-width: 540px;
     margin: 0 auto;
 }
 
@@ -39,37 +39,38 @@ $langCode = $selectedLang ?? 'en';
     justify-content: center;
     text-decoration: none;
     color: #64748b;
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 700;
     gap: 3px;
     padding: 6px 10px;
     border-radius: 12px;
     transition: all 0.2s ease;
     flex: 1;
-    max-width: 80px;
+    max-width: 85px;
     position: relative;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .bottom-tab-item i {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .bottom-tab-item.active {
-    color: #0284c7;
+    color: #0284c7 !important;
 }
 
 .bottom-tab-item.active i {
     transform: translateY(-2px);
-    color: #0284c7;
+    color: #0284c7 !important;
 }
 
 .bottom-tab-item.active::after {
     content: '';
     position: absolute;
     bottom: 4px;
-    width: 18px;
-    height: 3px;
+    width: 20px;
+    height: 3.5px;
     background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
     border-radius: 4px;
 }
@@ -79,24 +80,24 @@ $langCode = $selectedLang ?? 'en';
 }
 
 .bottom-tab-logout {
-    color: #ef4444;
+    color: #ef4444 !important;
 }
 .bottom-tab-logout:hover {
-    color: #dc2626;
+    color: #dc2626 !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .mobile-bottom-nav {
         display: block !important;
     }
     body {
-        padding-bottom: 74px !important;
+        padding-bottom: 80px !important;
     }
     .civicbot-launcher {
-        bottom: 76px !important;
+        bottom: 80px !important;
     }
     .civicbot-window {
-        bottom: 140px !important;
+        bottom: 145px !important;
     }
 }
 </style>
