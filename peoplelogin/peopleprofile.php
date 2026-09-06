@@ -1175,21 +1175,6 @@ function previewAvatar(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
-function toggleCitizenNav() {
-    var nav = document.getElementById('citizenNav');
-    var icon = document.getElementById('navToggleIcon');
-    if(nav) {
-        nav.classList.toggle('mobile-active');
-        if(nav.classList.contains('mobile-active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-xmark');
-        } else {
-            icon.classList.remove('fa-xmark');
-            icon.classList.add('fa-bars');
-        }
-    }
-}
 </script>
 <?php include("../includes/chatbot_widget.php"); ?>
 <?php include("../includes/citizen_bottom_nav.php"); ?>

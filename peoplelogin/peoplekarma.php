@@ -544,22 +544,7 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
         </div>
     </div>
 
-    <script>
-    function toggleKarmaNav() {
-        var nav = document.getElementById('karmaNav');
-        var icon = document.getElementById('karmaNavIcon');
-        if(nav) {
-            nav.classList.toggle('mobile-active');
-            if(nav.classList.contains('mobile-active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-            }
-        }
-    }
-    </script>
+
     <?php include("../includes/chatbot_widget.php"); ?>
     <?php include("../includes/citizen_bottom_nav.php"); ?>
 </body>

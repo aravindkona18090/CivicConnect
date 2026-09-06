@@ -48,63 +48,12 @@ body {
   background: var(--bg-slate);
   color: var(--text-dark);
   min-height: 100vh;
-  padding-bottom: 60px;
-}
-
-header {
-  background: #ffffff;
-  padding: 16px 36px;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.logo-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.logo-badge {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.1rem;
-}
-
-.logo-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--text-dark);
-}
-
-nav a {
-  color: var(--text-muted);
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-nav a:hover {
-  color: var(--primary);
+  padding-bottom: 80px;
 }
 
 main {
   max-width: 1100px;
-  margin: 36px auto;
+  margin: 32px auto;
   padding: 0 20px;
 }
 
@@ -112,19 +61,96 @@ main {
   font-size: 1.6rem;
   font-weight: 800;
   color: var(--text-dark);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+
+/* Filter Bar Controls */
+.filter-bar-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-tabs-group {
+  display: flex;
+  gap: 6px;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.filter-tab {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.filter-tab.active {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+.filter-search-box {
+  position: relative;
+  width: 280px;
+}
+
+.filter-search-box input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.86rem;
+  font-family: inherit;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.filter-search-box input:focus {
+  border-color: #0284c7;
+}
+
+.filter-search-box i {
+  position: absolute;
+  left: 12px;
+  top: 11px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ========================================================
+   TABLE & DESKTOP STYLES
+   ======================================================== */
 .table-card {
   background: var(--card-bg);
   border-radius: 16px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-light);
   overflow: hidden;
-  margin-top: 20px;
 }
 
 table {
@@ -162,6 +188,7 @@ tbody tr:hover {
   background: #fbfdff;
 }
 
+/* Shared Elements */
 .badge-status {
   padding: 5px 12px;
   border-radius: 20px;
@@ -170,14 +197,39 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 .status-pending { background: #fef3c7; color: #92400e; }
 .status-inprogress { background: #e0f2fe; color: #0369a1; }
 .status-completed { background: #d1fae5; color: #065f46; }
 
+.category-pill {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+.complaint-desc-text {
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+  max-width: 320px;
+  word-break: break-word;
+}
+
+.complaint-loc-text {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
 .thumb-preview {
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   border-radius: 8px;
   object-fit: cover;
   cursor: pointer;
@@ -186,6 +238,28 @@ tbody tr:hover {
 }
 .thumb-preview:hover {
   transform: scale(1.08);
+}
+
+.print-slip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  transition: all 0.15s;
+}
+.print-slip-btn:hover {
+  background: #dbeafe;
+}
+
+.mobile-only-header {
+  display: none;
 }
 
 /* Modal Lightbox */
@@ -222,75 +296,149 @@ tbody tr:hover {
   font-weight: bold;
 }
 
-.mobile-nav-toggle {
-  display: none;
-  background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
-  color: var(--text-dark);
-  font-size: 1.15rem;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.mobile-nav-toggle:hover { background: #e2e8f0; }
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+/* ========================================================
+   MOBILE CARD LAYOUT (@media max-width: 768px)
+   ELIMINATES SQUEEZED TABLE AND AWKWARD VERTICAL WATERFALL
+   ======================================================== */
 @media (max-width: 768px) {
-  .mobile-nav-toggle { display: flex; }
-  header {
-    padding: 12px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  main {
+    margin: 16px auto 30px;
+    padding: 0 14px;
   }
-  nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  .page-title {
+    font-size: 1.35rem;
+  }
+  .page-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+  }
+
+  /* Responsive Filter Controls */
+  .filter-bar-wrap {
     flex-direction: column;
     align-items: stretch;
-    padding: 12px 16px;
-    gap: 4px;
-    animation: civicNavDown 0.2s ease forwards;
+    gap: 10px;
+    margin-bottom: 16px;
   }
-  nav.mobile-active {
-    display: flex;
-  }
-  nav a {
-    margin-left: 0;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 0.92rem;
-  }
-  nav a:hover {
-    background: #f1f5f9;
-  }
-  .table-card {
+  .filter-tabs-group {
+    width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    justify-content: space-between;
   }
-  table {
-    min-width: 650px;
+  .filter-tab {
+    flex: 1;
+    padding: 7px 10px;
+    text-align: center;
+    font-size: 0.78rem;
   }
-}
+  .filter-search-box {
+    width: 100%;
+  }
 
-@keyframes civicNavDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  /* Hide the HTML table header */
+  #citizenComplaintsTable thead {
+    display: none !important;
+  }
+
+  /* Convert table container into fluid list */
+  .table-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    margin-top: 12px;
+  }
+
+  #citizenComplaintsTable,
+  #citizenComplaintsTable tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* Transform each row into a distinct, high-end Mobile Card */
+  .problem-record-row {
+    display: block !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05) !important;
+    margin-bottom: 16px !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+  }
+
+  /* td cells become clean stacked block segments */
+  .problem-record-row td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    border: none !important;
+    margin-bottom: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Desktop-only elements hide on mobile */
+  .desktop-only-cell {
+    display: none !important;
+  }
+
+  /* Mobile card header with ID, category, and status */
+  .mobile-only-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .desktop-id-meta {
+    display: none !important;
+  }
+
+  /* THE AWKWARD DESCRIPTION FIX: 100% FULL WIDTH WITH NATURAL WRAPPING */
+  .complaint-desc-text {
+    max-width: 100% !important;
+    font-size: 0.98rem !important;
+    line-height: 1.55 !important;
+    color: #0f172a !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    margin-top: 4px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .complaint-loc-text {
+    font-size: 0.84rem !important;
+  }
+
+  /* Photos section on mobile card */
+  .photos-cell-wrap {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-top: 4px;
+  }
+
+  /* Officer box on mobile */
+  .officer-cell-wrap {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+
+  /* Card footer: print slip link aligned right */
+  .problem-record-row td:last-child {
+    margin-bottom: 0 !important;
+    padding-top: 8px !important;
+    border-top: 1px dashed #e2e8f0 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
 }
 </style>
 </head>
@@ -303,21 +451,22 @@ tbody tr:hover {
         <i class="fa-solid fa-clipboard-list" style="color:var(--primary);"></i> 
         <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Tracked Complaints'; ?>
     </div>
-    <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:20px;">Track the real-time status of your reported municipal issues, assigned officers, and resolution proof photos.</p>
+    <p class="page-subtitle">Track the real-time status of your reported municipal issues, assigned officers, and resolution proof photos.</p>
 
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+    <!-- Status Filter & Search Controls -->
+    <div class="filter-bar-wrap">
         <!-- Status Filter Tabs -->
-        <div style="display:flex; gap:6px; background:#fff; padding:4px; border-radius:12px; border:1px solid var(--border-color);">
-            <button type="button" class="filter-tab active" onclick="filterCitizenRows('all', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:#0284c7; color:#fff;">All</button>
-            <button type="button" class="filter-tab" onclick="filterCitizenRows('Pending', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">Pending</button>
-            <button type="button" class="filter-tab" onclick="filterCitizenRows('In Progress', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">In Progress</button>
-            <button type="button" class="filter-tab" onclick="filterCitizenRows('Completed', this)" style="padding:6px 14px; border:none; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer; background:transparent; color:var(--text-muted);">Resolved</button>
+        <div class="filter-tabs-group">
+            <button type="button" class="filter-tab active" onclick="filterCitizenRows('all', this)">All</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('Pending', this)">Pending</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('In Progress', this)">In Progress</button>
+            <button type="button" class="filter-tab" onclick="filterCitizenRows('Completed', this)">Resolved</button>
         </div>
 
         <!-- Search Input -->
-        <div style="position:relative; width:280px;">
-            <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:11px; color:var(--text-muted); font-size:0.85rem;"></i>
-            <input type="text" id="citizenSearch" placeholder="Search by ID, area, category..." onkeyup="filterCitizenSearch()" style="width:100%; padding:8px 12px 8px 34px; border:1.5px solid var(--border-color); border-radius:10px; font-size:0.85rem; font-family:inherit; outline:none;">
+        <div class="filter-search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="citizenSearch" placeholder="Search by ID, area, category..." onkeyup="filterCitizenSearch()">
         </div>
     </div>
 
@@ -341,49 +490,95 @@ tbody tr:hover {
                         $searchBlob = strtolower($row['id'] . ' ' . $row['category'] . ' ' . $row['description'] . ' ' . $row['street'] . ' ' . ($row['area'] ?? '') . ' ' . ($row['worker_name'] ?? ''));
                     ?>
                         <tr class="problem-record-row" data-status="<?php echo $st; ?>" data-search="<?php echo htmlspecialchars($searchBlob); ?>">
-                            <td>
-                                <strong>#<?php echo $row['id']; ?></strong><br>
-                                <span style="background:#e0f2fe; color:#0369a1; padding:3px 8px; border-radius:6px; font-weight:700; font-size:0.8rem; display:inline-block; margin-top:4px;">
-                                    <?php echo htmlspecialchars($row['category']); ?>
-                                </span>
-                            </td>
-                            <td>
-                                <div style="font-weight:600; color:#0f172a; margin-bottom:4px; max-width:320px;"><?php echo htmlspecialchars($row['description']); ?></div>
-                                <div style="color:var(--text-muted); font-size:0.82rem;"><i class="fa-solid fa-location-dot" style="color:#ef4444;"></i> <?php echo htmlspecialchars($row['street'] . ($row['area'] ? ', ' . $row['area'] : '')); ?></div>
-                            </td>
-                            <td>
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <?php if (!empty($row['photo'])): ?>
-                                        <div title="Your Report Photo">
-                                            <img src="<?php echo htmlspecialchars($row['photo']); ?>" class="thumb-preview" onclick="zoomPhoto('<?php echo htmlspecialchars($row['photo']); ?>', '📷 Your Original Report Photo')">
-                                            <div style="font-size:0.7rem; color:var(--text-muted); text-align:center;">Before</div>
-                                        </div>
-                                    <?php endif; ?>
+                            <!-- 1. Header segment: ID + Category on Desktop; on Mobile shows ID + Category on left & Status on right -->
+                            <td class="col-id-category">
+                                <!-- Mobile Card Top Bar -->
+                                <div class="mobile-only-header">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <strong style="font-size:1.02rem; color:#0f172a;">#<?php echo $row['id']; ?></strong>
+                                        <span class="category-pill">
+                                            <?php echo htmlspecialchars($row['category']); ?>
+                                        </span>
+                                    </div>
+                                    <span class="badge-status <?php echo $stClass; ?>">
+                                        <i class="fa-solid <?php echo $stIcon; ?>"></i> <?php echo $st; ?>
+                                    </span>
+                                </div>
 
-                                    <?php if (!empty($row['after_photo'])): ?>
-                                        <div title="Field Officer Resolution Proof Photo">
-                                            <img src="<?php echo htmlspecialchars($row['after_photo']); ?>" class="thumb-preview" style="border:2px solid #10b981;" onclick="zoomPhoto('<?php echo htmlspecialchars($row['after_photo']); ?>', '✅ Field Officer Fixed Proof Photo')">
-                                            <div style="font-size:0.7rem; color:#059669; font-weight:bold; text-align:center;">After</div>
+                                <!-- Desktop ID & Category -->
+                                <div class="desktop-id-meta">
+                                    <strong style="font-size:0.95rem; color:#0f172a;">#<?php echo $row['id']; ?></strong><br>
+                                    <span class="category-pill">
+                                        <?php echo htmlspecialchars($row['category']); ?>
+                                    </span>
+                                </div>
+                            </td>
+
+                            <!-- 2. Complaint Details: Full width on mobile, no awkward squeeze -->
+                            <td class="col-details">
+                                <div class="complaint-desc-text"><?php echo htmlspecialchars($row['description']); ?></div>
+                                <div class="complaint-loc-text">
+                                    <i class="fa-solid fa-location-dot" style="color:#ef4444; margin-right:3px;"></i>
+                                    <?php echo htmlspecialchars($row['street'] . ($row['area'] ? ', ' . $row['area'] : '')); ?>
+                                </div>
+                            </td>
+
+                            <!-- 3. Photos -->
+                            <td class="col-photos">
+                                <div class="photos-cell-wrap">
+                                    <?php if (!empty($row['photo']) || !empty($row['after_photo'])): ?>
+                                        <div style="display:flex; align-items:center; gap:10px;">
+                                            <?php if (!empty($row['photo'])): ?>
+                                                <div title="Your Report Photo" style="text-align:center;">
+                                                    <img src="<?php echo htmlspecialchars($row['photo']); ?>" class="thumb-preview" onclick="zoomPhoto('<?php echo htmlspecialchars($row['photo']); ?>', '📷 Your Original Report Photo')">
+                                                    <div style="font-size:0.7rem; color:var(--text-muted); margin-top:2px;">Before</div>
+                                                </div>
+                                            <?php endif; ?>
+
+                                            <?php if (!empty($row['after_photo'])): ?>
+                                                <div title="Field Officer Resolution Proof Photo" style="text-align:center;">
+                                                    <img src="<?php echo htmlspecialchars($row['after_photo']); ?>" class="thumb-preview" style="border:2px solid #10b981;" onclick="zoomPhoto('<?php echo htmlspecialchars($row['after_photo']); ?>', '✅ Field Officer Fixed Proof Photo')">
+                                                    <div style="font-size:0.7rem; color:#059669; font-weight:700; margin-top:2px;">After</div>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
+                                    <?php else: ?>
+                                        <span style="color:#94a3b8; font-size:0.8rem; font-style:italic;"><i class="fa-regular fa-image"></i> No photos attached</span>
                                     <?php endif; ?>
                                 </div>
                             </td>
-                            <td>
-                                <?php if (!empty($row['worker_name'])): ?>
-                                    <div style="font-weight:700; color:#0f172a; font-size:0.88rem;"><i class="fa-solid fa-hard-hat" style="color:#0284c7;"></i> <?php echo htmlspecialchars($row['worker_name']); ?></div>
-                                    <?php if (!empty($row['worker_phone'])): ?>
-                                        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;"><i class="fa-solid fa-phone" style="font-size:0.75rem;"></i> <?php echo htmlspecialchars($row['worker_phone']); ?></div>
+
+                            <!-- 4. Assigned Officer -->
+                            <td class="col-officer">
+                                <div class="officer-cell-wrap">
+                                    <?php if (!empty($row['worker_name'])): ?>
+                                        <div style="font-weight:700; color:#0f172a; font-size:0.88rem;">
+                                            <i class="fa-solid fa-hard-hat" style="color:#0284c7;"></i> <?php echo htmlspecialchars($row['worker_name']); ?>
+                                        </div>
+                                        <?php if (!empty($row['worker_phone'])): ?>
+                                            <div style="font-size:0.82rem; margin-top:3px;">
+                                                <a href="tel:<?php echo htmlspecialchars($row['worker_phone']); ?>" style="color:#0284c7; text-decoration:none; font-weight:600; display:inline-flex; align-items:center; gap:4px;">
+                                                    <i class="fa-solid fa-phone" style="font-size:0.75rem; color:#10b981;"></i> <?php echo htmlspecialchars($row['worker_phone']); ?>
+                                                </a>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <span style="color:#94a3b8; font-size:0.82rem; font-style:italic;">
+                                            <i class="fa-solid fa-user-clock"></i> Awaiting Officer Allocation
+                                        </span>
                                     <?php endif; ?>
-                                <?php else: ?>
-                                    <span style="color:#94a3b8; font-size:0.82rem; font-style:italic;">Awaiting Officer Allocation</span>
-                                <?php endif; ?>
+                                </div>
                             </td>
-                            <td>
-                                <span class="badge-status <?php echo $stClass; ?>" style="margin-bottom:6px; display:inline-flex;">
-                                    <i class="fa-solid <?php echo $stIcon; ?>"></i> <?php echo $st; ?>
-                                </span><br>
-                                <a href="print_complaint.php?id=<?php echo $row['id']; ?>" target="_blank" style="display:inline-flex; align-items:center; gap:4px; font-size:0.75rem; font-weight:700; color:#2563eb; text-decoration:none; padding:4px 8px; border-radius:6px; background:#eff6ff; border:1px solid #bfdbfe;">
-                                    <i class="fa-solid fa-print"></i> Slip
+
+                            <!-- 5. Actions / Status (on Desktop shows status + slip; on Mobile shows print slip) -->
+                            <td class="col-status-action">
+                                <div class="desktop-only-cell" style="margin-bottom:6px;">
+                                    <span class="badge-status <?php echo $stClass; ?>">
+                                        <i class="fa-solid <?php echo $stIcon; ?>"></i> <?php echo $st; ?>
+                                    </span>
+                                </div>
+                                <a href="print_complaint.php?id=<?php echo $row['id']; ?>" target="_blank" class="print-slip-btn">
+                                    <i class="fa-solid fa-print"></i> <span>Download Slip</span>
                                 </a>
                             </td>
                         </tr>
@@ -416,13 +611,9 @@ function filterCitizenRows(status, btn) {
     activeStatusFilter = status;
     document.querySelectorAll('.filter-tab').forEach(b => {
         b.classList.remove('active');
-        b.style.background = 'transparent';
-        b.style.color = 'var(--text-muted)';
     });
     if (btn) {
         btn.classList.add('active');
-        btn.style.background = '#0284c7';
-        btn.style.color = '#fff';
     }
     applyCitizenFilters();
 }
@@ -443,12 +634,13 @@ function applyCitizenFilters() {
         const matchesTerm = (!term || rowSearch.includes(term));
 
         if (matchesStatus && matchesTerm) {
-            row.style.display = '';
+            row.style.setProperty('display', '', '');
         } else {
-            row.style.display = 'none';
+            row.style.setProperty('display', 'none', 'important');
         }
     });
 }
+
 function zoomPhoto(src, title) {
     document.getElementById('modalImg').src = src;
     document.getElementById('modalTitle').innerText = title || 'Inspection Photo';
@@ -463,21 +655,6 @@ function closeZoom(e) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeZoomModal();
 });
-
-function toggleCitizenNav() {
-    var nav = document.getElementById('citizenNav');
-    var icon = document.getElementById('navToggleIcon');
-    if(nav) {
-        nav.classList.toggle('mobile-active');
-        if(nav.classList.contains('mobile-active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-xmark');
-        } else {
-            icon.classList.remove('fa-xmark');
-            icon.classList.add('fa-bars');
-        }
-    }
-}
 </script>
 
 <?php include("../includes/chatbot_widget.php"); ?>

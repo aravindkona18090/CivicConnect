@@ -183,60 +183,7 @@ body {
   line-height: 1.6;
 }
 
-/* Header */
-header {
-  background: #ffffff;
-  padding: 16px 40px;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
 
-.logo-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.logo-badge {
-  width: 40px;
-  height: 40px;
-  background: var(--gradient-main);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.15rem;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-}
-
-.logo-title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--text-dark);
-}
-
-nav { display: flex; align-items: center; gap: 20px; }
-
-nav a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-nav a:hover { color: var(--primary); }
 
 /* Main Wrapper */
 main {
@@ -309,62 +256,7 @@ main {
   .report-grid { grid-template-columns: 1fr; }
 }
 
-.mobile-nav-toggle {
-  display: none;
-  background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
-  color: var(--text-dark);
-  font-size: 1.15rem;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.mobile-nav-toggle:hover { background: #e2e8f0; }
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 @media (max-width: 768px) {
-  .mobile-nav-toggle { display: flex; }
-  header {
-    padding: 12px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
-  nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    flex-direction: column;
-    align-items: stretch;
-    padding: 12px 16px;
-    gap: 4px;
-    animation: civicNavDown 0.2s ease forwards;
-  }
-  nav.mobile-active {
-    display: flex;
-  }
-  nav a {
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 0.92rem;
-  }
-  nav a:hover {
-    background: #f1f5f9;
-  }
   .citizen-welcome-card {
     padding: 24px 20px;
   }
@@ -374,11 +266,9 @@ main {
   #map {
     height: 280px;
   }
-}
-
-@keyframes civicNavDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  .tracker-section {
+    padding: 20px 16px;
+  }
 }
 
 .form-panel, .map-panel {
@@ -681,42 +571,46 @@ select:focus, input[type="text"]:focus, textarea:focus {
 
   <!-- Recent Complaints Tracker Table -->
   <div class="tracker-section">
-    <div class="panel-title">
-      <i class="fa-solid fa-clock-rotate-left" style="color:#d97706;"></i>
-      <span>Recent Submitted Complaints</span>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+      <div class="panel-title" style="margin-bottom:0;">
+        <i class="fa-solid fa-clock-rotate-left" style="color:#d97706;"></i>
+        <span>Recent Submitted Complaints</span>
+      </div>
+      <a href="peoplemyproblems.php" style="color:#0284c7; font-weight:700; font-size:0.85rem; text-decoration:none; display:inline-flex; align-items:center; gap:5px; background:#eff6ff; padding:6px 12px; border-radius:8px;">
+        View All <i class="fa-solid fa-arrow-right" style="font-size:0.75rem;"></i>
+      </a>
     </div>
 
     <?php if(mysqli_num_rows($recent_complaints) > 0): ?>
-      <table class="complaint-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Reported Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php while($c = mysqli_fetch_assoc($recent_complaints)): ?>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
+        <table class="complaint-table">
+          <thead>
             <tr>
-              <td><strong>#<?php echo $c['id']; ?></strong></td>
-              <td><span style="font-weight:700; color:#0284c7;"><?php echo htmlspecialchars($c['category']); ?></span></td>
-              <td><?php echo htmlspecialchars($c['description']); ?></td>
-              <td><small style="color:var(--text-muted);"><?php echo htmlspecialchars($c['street']); ?></small></td>
-              <td><small><?php echo date('M d, Y', strtotime($c['created_at'])); ?></small></td>
-              <td>
-                <?php 
-                $st = $c['status'] ?? 'Pending';
-                $stCls = $st === 'Completed' ? 'st-completed' : ($st === 'In Progress' ? 'st-inprogress' : 'st-pending');
-                ?>
-                <span class="status-badge <?php echo $stCls; ?>"><?php echo $st; ?></span>
-              </td>
+              <th>ID</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Reported Date</th>
+              <th>Status</th>
             </tr>
-          <?php endwhile; ?>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <?php while($c = mysqli_fetch_assoc($recent_complaints)): 
+              $st = $c['status'] ?? 'Pending';
+              $stCls = $st === 'Completed' ? 'st-completed' : ($st === 'In Progress' ? 'st-inprogress' : 'st-pending');
+            ?>
+              <tr>
+                <td><strong>#<?php echo $c['id']; ?></strong></td>
+                <td><span style="font-weight:700; color:#0284c7; font-size:0.85rem;"><?php echo htmlspecialchars($c['category']); ?></span></td>
+                <td><small style="color:var(--text-muted); font-size:0.82rem;"><?php echo htmlspecialchars($c['street']); ?></small></td>
+                <td><small style="font-size:0.82rem; color:#64748b;"><?php echo date('M d, Y', strtotime($c['created_at'])); ?></small></td>
+                <td>
+                  <span class="status-badge <?php echo $stCls; ?>"><?php echo $st; ?></span>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      </div>
     <?php else: ?>
       <p style="text-align:center; color:var(--text-muted); padding:20px;">You haven't reported any problems yet. Use the form above to file your first complaint!</p>
     <?php endif; ?>
@@ -868,21 +762,6 @@ $(document).ready(function(){
         }
     });
 });
-
-function toggleCitizenNav() {
-    var nav = document.getElementById('citizenNav');
-    var icon = document.getElementById('navToggleIcon');
-    if(nav) {
-        nav.classList.toggle('mobile-active');
-        if(nav.classList.contains('mobile-active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-xmark');
-        } else {
-            icon.classList.remove('fa-xmark');
-            icon.classList.add('fa-bars');
-        }
-    }
-}
 </script>
 
 <?php include("../includes/chatbot_widget.php"); ?>

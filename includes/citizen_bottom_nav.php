@@ -1,133 +1,162 @@
 <?php
-// includes/citizen_bottom_nav.php - Modern Native Mobile App Bottom Navigation Bar
+// includes/citizen_bottom_nav.php - Ultra-Minimal Icon-Only Floating Dock with Elevated Center "+ Report" Hero Button
 $current_page = basename($_SERVER['PHP_SELF']);
 $langCode = $selectedLang ?? 'en';
 ?>
 <style>
 /* ========================================================
-   CIVICCONNECT MODERN MOBILE BOTTOM TAB BAR
+   ULTRA-MINIMAL FLOATING GLASS DOCK (ICON-ONLY)
    ======================================================== */
-.mobile-bottom-nav {
+.mobile-floating-dock {
     display: none;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1.5px solid #e2e8f0;
-    box-shadow: 0 -6px 25px rgba(15, 23, 42, 0.12);
+    bottom: 12px;
+    left: 14px;
+    right: 14px;
+    max-width: 360px;
+    margin: 0 auto;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    border-radius: 34px;
+    box-shadow: 0 14px 34px -6px rgba(15, 23, 42, 0.18), 0 2px 10px rgba(15, 23, 42, 0.06);
     z-index: 999999;
-    padding: 0 6px;
+    padding: 0 8px;
+    box-sizing: border-box;
 }
 
-.mobile-bottom-nav-inner {
+.dock-inner {
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 100%;
-    max-width: 540px;
-    margin: 0 auto;
+    width: 100%;
+    position: relative;
 }
 
-.bottom-tab-item {
+/* Minimal Icon-Only Dock Tab Items */
+.dock-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     color: #64748b;
-    font-size: 0.74rem;
-    font-weight: 700;
-    gap: 3px;
-    padding: 6px 10px;
-    border-radius: 12px;
-    transition: all 0.2s ease;
     flex: 1;
-    max-width: 85px;
-    position: relative;
+    height: 100%;
+    border-radius: 20px;
+    transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
 }
 
-.bottom-tab-item i {
-    font-size: 1.2rem;
-    transition: transform 0.2s ease, color 0.2s ease;
+.dock-item i {
+    font-size: 1.32rem;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
 }
 
-.bottom-tab-item.active {
+.dock-item.active {
     color: #0284c7 !important;
 }
 
-.bottom-tab-item.active i {
+.dock-item.active i {
     transform: translateY(-2px);
     color: #0284c7 !important;
 }
 
-.bottom-tab-item.active::after {
+.dock-item.active::after {
     content: '';
     position: absolute;
-    bottom: 4px;
-    width: 20px;
-    height: 3.5px;
+    bottom: 8px;
+    width: 6px;
+    height: 6px;
     background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
-    border-radius: 4px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
 }
 
-.bottom-tab-item:hover {
-    color: #0284c7;
+.dock-item:active i {
+    transform: scale(0.85);
 }
 
-.bottom-tab-logout {
-    color: #ef4444 !important;
+/* Elevated Center Hero "+ Report" Action Button */
+.dock-center-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    position: relative;
+    top: -14px;
+    flex: 1;
+    -webkit-tap-highlight-color: transparent;
 }
-.bottom-tab-logout:hover {
-    color: #dc2626 !important;
+
+.center-action-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 10px 22px rgba(16, 185, 129, 0.45), 0 0 0 4px #ffffff;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dock-center-action:active .center-action-btn,
+.dock-center-action:hover .center-action-btn {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 14px 28px rgba(16, 185, 129, 0.55), 0 0 0 4px #ffffff;
 }
 
 @media (max-width: 900px) {
-    .mobile-bottom-nav {
+    .mobile-floating-dock {
         display: block !important;
     }
     body {
-        padding-bottom: 80px !important;
+        padding-bottom: 86px !important;
     }
     .civicbot-launcher {
-        bottom: 80px !important;
+        bottom: 82px !important;
+        right: 18px !important;
     }
     .civicbot-window {
-        bottom: 145px !important;
+        bottom: 148px !important;
     }
 }
 </style>
 
-<!-- Mobile Bottom Navigation Bar -->
-<nav class="mobile-bottom-nav" aria-label="Mobile Navigation Bar">
-    <div class="mobile-bottom-nav-inner">
-        <a href="peopledashboard.php" class="bottom-tab-item <?php echo $current_page === 'peopledashboard.php' ? 'active' : ''; ?>">
+<!-- Modern App-First Floating Dock (Minimal Icon-Only) -->
+<nav class="mobile-floating-dock" aria-label="Mobile Navigation Dock">
+    <div class="dock-inner">
+        <!-- 1. Home / Dashboard -->
+        <a href="peopledashboard.php" class="dock-item <?php echo $current_page === 'peopledashboard.php' ? 'active' : ''; ?>" title="<?php echo $lang[$langCode]['dashboard'] ?? 'Home'; ?>" aria-label="Home">
             <i class="fa-solid fa-house"></i>
-            <span><?php echo $lang[$langCode]['dashboard'] ?? 'Home'; ?></span>
         </a>
 
-        <a href="peoplemyproblems.php" class="bottom-tab-item <?php echo $current_page === 'peoplemyproblems.php' ? 'active' : ''; ?>">
+        <!-- 2. Complaints Track -->
+        <a href="peoplemyproblems.php" class="dock-item <?php echo $current_page === 'peoplemyproblems.php' ? 'active' : ''; ?>" title="<?php echo $lang[$langCode]['my_problems'] ?? 'Complaints'; ?>" aria-label="Complaints">
             <i class="fa-solid fa-list-check"></i>
-            <span>Complaints</span>
         </a>
 
-        <a href="peoplekarma.php" class="bottom-tab-item <?php echo $current_page === 'peoplekarma.php' ? 'active' : ''; ?>">
+        <!-- 3. CENTER HERO ELEVATED "+ REPORT" BUTTON -->
+        <a href="peopledashboard.php#reportSection" class="dock-center-action" title="Report a Problem" aria-label="Report a Problem">
+            <div class="center-action-btn">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </a>
+
+        <!-- 4. Civic Karma -->
+        <a href="peoplekarma.php" class="dock-item <?php echo $current_page === 'peoplekarma.php' ? 'active' : ''; ?>" title="Civic Karma" aria-label="Karma">
             <i class="fa-solid fa-trophy"></i>
-            <span>Karma</span>
         </a>
 
-        <a href="peopleprofile.php" class="bottom-tab-item <?php echo $current_page === 'peopleprofile.php' ? 'active' : ''; ?>">
+        <!-- 5. Profile -->
+        <a href="peopleprofile.php" class="dock-item <?php echo $current_page === 'peopleprofile.php' ? 'active' : ''; ?>" title="<?php echo $lang[$langCode]['profile'] ?? 'Profile'; ?>" aria-label="Profile">
             <i class="fa-solid fa-user"></i>
-            <span><?php echo $lang[$langCode]['profile'] ?? 'Profile'; ?></span>
-        </a>
-
-        <a href="../logout.php" class="bottom-tab-item bottom-tab-logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span><?php echo $lang[$langCode]['logout'] ?? 'Logout'; ?></span>
         </a>
     </div>
 </nav>
