@@ -528,6 +528,30 @@ tbody tr:hover { background: #fbfdff; }
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
 }
+
+@media (max-width: 768px) {
+    header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .user-profile {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+    .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .table-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    table {
+        min-width: 650px;
+    }
+}
 </style>
 </head>
 <body>
