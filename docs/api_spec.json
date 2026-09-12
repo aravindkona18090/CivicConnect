@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CivicConnect Smart Governance API",
+    "version": "2.1.0",
+    "description": "RESTful endpoints for grievance logging, AI image verification, field worker allocation, and citizen notifications."
+  },
+  "paths": {
+    "/api/get_notifications.php": {
+      "get": {
+        "summary": "Fetch real-time grievance tracking alerts for logged-in citizen",
+        "responses": {
+          "200": {
+            "description": "List of active citizen notifications"
+          }
+        }
+      }
+    },
+    "/api/submit_feedback.php": {
+      "post": {
+        "summary": "Submit 5-star citizen resolution rating & review",
+        "parameters": [
+          { "name": "problem_id", "in": "body", "required": true },
+          { "name": "rating", "in": "body", "required": true },
+          { "name": "comment", "in": "body", "required": false }
+        ],
+        "responses": {
+          "200": { "description": "Feedback recorded with Karma XP awarded" }
+        }
+      }
+    },
+    "/api/ai_chat.php": {
+      "post": {
+        "summary": "Multilingual conversational AI assistant powered by Gemini API",
+        "responses": {
+          "200": { "description": "Conversational response in regional language" }
+        }
+      }
+    }
+  }
+}
