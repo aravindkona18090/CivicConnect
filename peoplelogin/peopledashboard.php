@@ -309,6 +309,35 @@ main {
   .report-grid { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 768px) {
+  header {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    gap: 10px;
+  }
+  nav a {
+    white-space: nowrap;
+    font-size: 0.82rem;
+    padding: 6px 10px;
+  }
+  .citizen-welcome-card {
+    padding: 24px 20px;
+  }
+  .form-panel, .map-panel {
+    padding: 20px 16px;
+  }
+  #map {
+    height: 280px;
+  }
+}
+
 .form-panel, .map-panel {
   background: var(--card-bg);
   border-radius: 20px;

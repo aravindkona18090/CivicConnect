@@ -435,6 +435,28 @@
     flex-shrink: 0;
 }
 .civic-send-btn:hover { transform: scale(1.08); }
+
+@media (max-width: 480px) {
+    .civicbot-window {
+        bottom: 80px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: none;
+        height: 75vh;
+        max-height: none;
+    }
+    .civicbot-launcher span {
+        display: none;
+    }
+    .civicbot-launcher {
+        padding: 8px;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        justify-content: center;
+    }
+}
 </style>
 
 <!-- Launcher Button -->

@@ -603,6 +603,55 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
             text-align: center;
             color: var(--text-muted);
         }
+
+        /* Responsive Mobile Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                gap: 6px;
+            }
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+            .welcome-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+            .welcome-text h1 {
+                font-size: 1.3rem;
+            }
+            #gisCommandMap {
+                height: 340px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-tabs {
+                overflow-x: auto;
+                width: 100%;
+                white-space: nowrap;
+            }
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table {
+                min-width: 650px;
+            }
+        }
     </style>
 </head>
 <body>

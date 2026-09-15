@@ -221,6 +221,35 @@ tbody tr:hover {
   font-size: 1rem;
   font-weight: bold;
 }
+
+@media (max-width: 768px) {
+  header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  nav {
+    order: 3;
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+  nav a {
+    margin-left: 0;
+    white-space: nowrap;
+    padding: 6px 10px;
+    font-size: 0.82rem;
+  }
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    min-width: 650px;
+  }
+}
 </style>
 </head>
 <body>
