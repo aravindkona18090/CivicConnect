@@ -98,13 +98,8 @@ if (!isset($_SESSION['otp'])) {
     $newOtp = rand(1000, 9999);
     $_SESSION['otp'] = $newOtp;
     $_SESSION['otp_timestamp'] = time();
-    $sent = sendCivicOtp($email, $newOtp);
-    if ($sent) {
-        $successMessage = "A 4-digit verification code has been sent to " . htmlspecialchars($email);
-    } else {
-        // Development fallback notice on localhost
-        $successMessage = "Verification code generated! (Dev OTP: <strong>{$newOtp}</strong>)";
-    }
+    sendCivicOtp($email, $newOtp);
+    $successMessage = "A 4-digit verification code has been sent to your email.";
 }
 
 // 4. Handle POST Submissions (Verify or Resend)
@@ -113,12 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newOtp = rand(1000, 9999);
         $_SESSION['otp'] = $newOtp;
         $_SESSION['otp_timestamp'] = time();
-        $sent = sendCivicOtp($email, $newOtp);
-        if ($sent) {
-            $successMessage = "A new verification code has been sent to " . htmlspecialchars($email);
-        } else {
-            $successMessage = "New verification code generated! (Dev OTP: <strong>{$newOtp}</strong>)";
-        }
+        sendCivicOtp($email, $newOtp);
+        $successMessage = "A new verification code has been sent to your email.";
     } elseif (isset($_POST['verify_otp'])) {
         // Collect 4 digits
         $d1 = trim($_POST['d1'] ?? '');
