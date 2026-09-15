@@ -30,67 +30,27 @@ $errorMessage = "";
 $successMessage = "";
 $isVerified = false;
 
-// 2. Email Sender Function (Resend API / PHPMailer / Dev Fallback)
+require_once __DIR__ . '/../includes/mailer.php';
+
 function sendCivicOtp($toEmail, $otpCode) {
-    $resendKey = civic_config('RESEND_API_KEY') ?: getenv('RESEND_API_KEY');
-    
-    // Attempt 1: Resend API
-    if (!empty($resendKey) && class_exists('Resend')) {
-        try {
-            $resend = Resend::client($resendKey);
-            $resend->emails->send([
-                'from' => 'CivicConnect <onboarding@resend.dev>',
-                'to' => [$toEmail],
-                'subject' => 'CivicConnect - Your 4-Digit Verification Code: ' . $otpCode,
-                'html' => "
-                    <div style='font-family:Arial,sans-serif; max-width:520px; margin:0 auto; padding:24px; border:1px solid #e2e8f0; border-radius:12px;'>
-                        <div style='text-align:center; margin-bottom:20px;'>
-                            <h2 style='color:#0f172a; margin:0;'>🏛️ CivicConnect</h2>
-                            <p style='color:#64748b; font-size:14px; margin-top:4px;'>Smart City Grievance Redressal Portal</p>
-                        </div>
-                        <p style='font-size:15px; color:#334155;'>Hello,</p>
-                        <p style='font-size:15px; color:#334155;'>Your one-time verification code for citizen registration is:</p>
-                        <div style='text-align:center; margin:24px 0;'>
-                            <span style='display:inline-block; font-size:32px; font-weight:800; letter-spacing:8px; color:#2563eb; background:#eff6ff; padding:12px 28px; border-radius:10px; border:1.5px dashed #3b82f6;'>{$otpCode}</span>
-                        </div>
-                        <p style='font-size:13px; color:#64748b; text-align:center;'>This code is valid for <strong>5 minutes</strong>. Please do not share it with anyone.</p>
-                        <hr style='border:none; border-top:1px solid #e2e8f0; margin:20px 0;'>
-                        <p style='font-size:12px; color:#94a3b8; text-align:center;'>CivicConnect Smart Governance System</p>
-                    </div>
-                "
-            ]);
-            return true;
-        } catch (\Exception $e) {
-            error_log("Resend API Error: " . $e->getMessage());
-        }
-    }
-
-    // Attempt 2: PHPMailer / Mail function
-    if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
-        try {
-            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-            $mail->isSMTP();
-            $mail->Host       = civic_config('SMTP_HOST', 'smtp.gmail.com');
-            $mail->SMTPAuth   = true;
-            $mail->Username   = civic_config('SMTP_USER', '');
-            $mail->Password   = civic_config('SMTP_PASS', '');
-            $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
-            if (!empty($mail->Username)) {
-                $mail->setFrom($mail->Username, 'CivicConnect');
-                $mail->addAddress($toEmail);
-                $mail->isHTML(true);
-                $mail->Subject = 'Your CivicConnect OTP: ' . $otpCode;
-                $mail->Body    = "Your OTP verification code is <strong>{$otpCode}</strong> (valid for 5 minutes).";
-                $mail->send();
-                return true;
-            }
-        } catch (\Exception $e) {
-            error_log("PHPMailer Error: " . $e->getMessage());
-        }
-    }
-
-    return false;
+    $subject = "CivicConnect - Your 4-Digit Verification Code: " . $otpCode;
+    $htmlContent = "
+        <div style='font-family:Arial,sans-serif; max-width:520px; margin:0 auto; padding:24px; border:1px solid #e2e8f0; border-radius:12px; background:#ffffff;'>
+            <div style='text-align:center; margin-bottom:20px;'>
+                <h2 style='color:#0f172a; margin:0;'>🏛️ CivicConnect</h2>
+                <p style='color:#64748b; font-size:14px; margin-top:4px;'>Smart City Public Grievance Redressal Portal</p>
+            </div>
+            <p style='font-size:15px; color:#334155;'>Hello Citizen,</p>
+            <p style='font-size:15px; color:#334155;'>Your one-time verification code for registering your CivicConnect account is:</p>
+            <div style='text-align:center; margin:24px 0;'>
+                <span style='display:inline-block; font-size:32px; font-weight:800; letter-spacing:8px; color:#2563eb; background:#eff6ff; padding:12px 28px; border-radius:10px; border:1.5px dashed #3b82f6;'>{$otpCode}</span>
+            </div>
+            <p style='font-size:13px; color:#64748b; text-align:center;'>This code is valid for <strong>5 minutes</strong>. Never share this code with anyone.</p>
+            <hr style='border:none; border-top:1px solid #e2e8f0; margin:20px 0;'>
+            <p style='font-size:12px; color:#94a3b8; text-align:center;'>CivicConnect Smart Governance System</p>
+        </div>
+    ";
+    return sendCivicEmail($toEmail, $subject, $htmlContent);
 }
 
 // 3. Auto-send OTP on first load
