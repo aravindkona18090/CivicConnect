@@ -309,23 +309,61 @@ main {
   .report-grid { grid-template-columns: 1fr; }
 }
 
+.mobile-nav-toggle {
+  display: none;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: var(--text-dark);
+  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mobile-nav-toggle:hover { background: #e2e8f0; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 @media (max-width: 768px) {
+  .mobile-nav-toggle { display: flex; }
   header {
-    padding: 14px 16px;
-    flex-wrap: wrap;
-    gap: 12px;
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
   nav {
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    gap: 10px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+    gap: 4px;
+    animation: civicNavDown 0.2s ease forwards;
+  }
+  nav.mobile-active {
+    display: flex;
   }
   nav a {
-    white-space: nowrap;
-    font-size: 0.82rem;
-    padding: 6px 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+  }
+  nav a:hover {
+    background: #f1f5f9;
   }
   .citizen-welcome-card {
     padding: 24px 20px;
@@ -336,6 +374,11 @@ main {
   #map {
     height: 280px;
   }
+}
+
+@keyframes civicNavDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .form-panel, .map-panel {
@@ -519,7 +562,7 @@ select:focus, input[type="text"]:focus, textarea:focus {
     <span class="logo-title">Civic<span style="color:#0284c7;">Connect</span></span>
   </a>
   
-  <nav>
+  <nav id="citizenNav">
     <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> <?php echo $lang[$selectedLang]['dashboard'] ?? 'Dashboard'; ?></a>
     <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> <?php echo $lang[$selectedLang]['my_problems'] ?? 'My Complaints'; ?></a>
     <a href="peoplekarma.php"><i class="fa-solid fa-trophy"></i> Civic Karma</a>
@@ -527,14 +570,19 @@ select:focus, input[type="text"]:focus, textarea:focus {
     <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> <?php echo $lang[$selectedLang]['logout'] ?? 'Logout'; ?></a>
   </nav>
 
-  <form method="POST" style="display:inline-flex; align-items:center; gap:6px;">
-    <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:8px; border:1px solid #cbd5e1; font-weight:600; font-family:inherit; cursor:pointer;" title="Select Language">
-      <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
-      <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
-      <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
-      <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
-    </select>
-  </form>
+  <div class="header-actions">
+    <form method="POST" style="display:inline-flex; align-items:center; gap:6px;">
+      <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:8px; border:1px solid #cbd5e1; font-weight:600; font-family:inherit; cursor:pointer;" title="Select Language">
+        <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
+        <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
+        <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
+        <option value="kn" <?php if ($selectedLang=='kn') echo 'selected'; ?>>🌐 ಕನ್ನಡ (Kannada)</option>
+      </select>
+    </form>
+    <button type="button" class="mobile-nav-toggle" onclick="toggleCitizenNav()" aria-label="Toggle Navigation">
+      <i class="fa-solid fa-bars" id="navToggleIcon"></i>
+    </button>
+  </div>
 </header>
 
 <main>
@@ -853,6 +901,21 @@ $(document).ready(function(){
         }
     });
 });
+
+function toggleCitizenNav() {
+    var nav = document.getElementById('citizenNav');
+    var icon = document.getElementById('navToggleIcon');
+    if(nav) {
+        nav.classList.toggle('mobile-active');
+        if(nav.classList.contains('mobile-active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    }
+}
 </script>
 
 <?php include("../includes/chatbot_widget.php"); ?>

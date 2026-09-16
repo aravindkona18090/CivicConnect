@@ -355,9 +355,63 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
         .lead-info span { font-size: 0.75rem; color: var(--text-muted); }
         .lead-score { font-size: 0.92rem; font-weight: 800; color: var(--primary); }
 
+        .mobile-nav-toggle {
+            display: none;
+            background: #f1f5f9;
+            border: 1.5px solid #cbd5e1;
+            color: var(--text-dark);
+            font-size: 1.15rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mobile-nav-toggle:hover { background: #e2e8f0; }
+
         @media (max-width: 768px) {
+            .mobile-nav-toggle { display: flex; }
+            .portal-nav {
+                padding: 12px 16px;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px 16px;
+                gap: 4px;
+                animation: civicNavDown 0.2s ease forwards;
+            }
+            .nav-links.mobile-active {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-size: 0.92rem;
+            }
+            .nav-links a:hover {
+                background: #f1f5f9;
+            }
             .karma-grid { grid-template-columns: 1fr; }
             .karma-hero { flex-direction: column; gap: 20px; text-align: center; }
+        }
+
+        @keyframes civicNavDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -371,13 +425,16 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
             </svg>
             CivicConnect
         </a>
-        <div class="nav-links">
+        <div class="nav-links" id="karmaNav">
             <a href="peopledashboard.php"><i class="fa-solid fa-house"></i> Home</a>
             <a href="peoplemyproblems.php"><i class="fa-solid fa-list-check"></i> My Complaints</a>
             <a href="peoplekarma.php" class="active"><i class="fa-solid fa-trophy"></i> Civic Karma</a>
             <a href="peopleprofile.php"><i class="fa-solid fa-user"></i> Profile</a>
             <a href="../logout.php" style="color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
+        <button type="button" class="mobile-nav-toggle" onclick="toggleKarmaNav()" aria-label="Toggle Navigation">
+            <i class="fa-solid fa-bars" id="karmaNavIcon"></i>
+        </button>
     </nav>
 
     <div class="karma-container">
@@ -504,6 +561,22 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
         </div>
     </div>
 
+    <script>
+    function toggleKarmaNav() {
+        var nav = document.getElementById('karmaNav');
+        var icon = document.getElementById('karmaNavIcon');
+        if(nav) {
+            nav.classList.toggle('mobile-active');
+            if(nav.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+    }
+    </script>
     <?php include("../includes/chatbot_widget.php"); ?>
 </body>
 </html>

@@ -476,7 +476,31 @@ footer {
 
 @media (max-width: 768px) {
     .hero-title { font-size: 2.2rem; }
-    header { padding: 14px 20px; }
+    header { 
+        padding: 12px 16px; 
+        flex-wrap: wrap; 
+        gap: 10px; 
+    }
+    .top-right { 
+        gap: 8px; 
+        flex-wrap: wrap;
+    }
+    .lang-select { 
+        padding: 6px 10px; 
+        font-size: 0.82rem; 
+    }
+    .nav-link-btn { 
+        padding: 7px 12px; 
+        font-size: 0.82rem; 
+    }
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-hero-primary, .btn-hero-secondary {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
 </head>
