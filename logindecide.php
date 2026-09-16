@@ -138,6 +138,72 @@ include("lang.php");
     .btn-admin { background: var(--amber-gradient); color: white; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3); }
 
     footer { text-align: center; padding: 24px; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--card-border); background: rgba(255, 255, 255, 0.5); }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .logo-text {
+        font-size: 1.25rem;
+      }
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.05rem;
+      }
+      .header-actions {
+        gap: 8px !important;
+      }
+      .back-btn {
+        padding: 6px 12px !important;
+        font-size: 0.8rem !important;
+      }
+      .lang-select-box {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+      }
+      main {
+        padding: 30px 16px;
+      }
+      h1 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+        margin-bottom: 12px;
+      }
+      .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+      }
+      .role-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .role-card {
+        padding: 26px 20px;
+        border-radius: 20px;
+      }
+      .icon-wrapper {
+        width: 54px;
+        height: 54px;
+        font-size: 1.35rem;
+        margin-bottom: 16px;
+        border-radius: 14px;
+      }
+      .role-title {
+        font-size: 1.25rem;
+      }
+      .role-desc {
+        font-size: 0.88rem;
+        margin-bottom: 22px;
+      }
+      .role-btn {
+        padding: 12px 16px;
+        font-size: 0.92rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -150,12 +216,12 @@ include("lang.php");
       <div class="logo-icon" style="background:linear-gradient(135deg, #10b981 0%, #0284c7 100%); box-shadow:0 4px 14px rgba(16, 185, 129, 0.35);"><i class="fa-solid fa-handshake"></i></div>
       <span class="logo-text">Civic<span style="color:#0284c7;">Connect</span></span>
     </a>
-    <div style="display:flex; align-items:center; gap:14px;">
-      <a href="index.php" style="text-decoration:none; background:#ffffff; color:#2563eb; padding:8px 16px; border-radius:12px; font-weight:700; font-size:0.9rem; border:1px solid #bfdbfe; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <div class="header-actions" style="display:flex; align-items:center; gap:14px;">
+      <a href="index.php" class="back-btn" style="text-decoration:none; background:#ffffff; color:#2563eb; padding:8px 16px; border-radius:12px; font-weight:700; font-size:0.9rem; border:1px solid #bfdbfe; box-shadow:0 2px 6px rgba(0,0,0,0.05); display:inline-flex; align-items:center; gap:6px;">
         <i class="fa-solid fa-arrow-left"></i> <?php echo $lang[$selectedLang]['back_to_home']; ?>
       </a>
       <form method="POST" style="display:inline-flex; align-items:center;">
-        <select name="language" onchange="this.form.submit()" style="padding:8px 12px; border-radius:10px; border:1px solid #bfdbfe; font-weight:700; font-family:inherit; cursor:pointer;" title="Select Language">
+        <select name="language" onchange="this.form.submit()" class="lang-select-box" style="padding:8px 12px; border-radius:10px; border:1px solid #bfdbfe; font-weight:700; font-family:inherit; cursor:pointer;" title="Select Language">
           <option value="en" <?php if ($selectedLang=='en') echo 'selected'; ?>>🌐 English</option>
           <option value="te" <?php if ($selectedLang=='te') echo 'selected'; ?>>🌐 తెలుగు (Telugu)</option>
           <option value="hn" <?php if ($selectedLang=='hn') echo 'selected'; ?>>🌐 हिंदी (Hindi)</option>
