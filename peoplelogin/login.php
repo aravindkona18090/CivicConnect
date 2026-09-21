@@ -77,11 +77,12 @@ $googleClientId = civic_config('GOOGLE_CLIENT_ID');
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.45); }
         
         /* OAUTH DIVIDER & GOOGLE BUTTON */
+        /* OAUTH DIVIDER & GOOGLE BUTTON */
         .oauth-divider {
             display: flex;
             align-items: center;
             text-align: center;
-            margin: 20px 0 16px;
+            margin: 22px 0 18px;
             color: var(--text-muted);
             font-size: 0.78rem;
             font-weight: 700;
@@ -95,13 +96,28 @@ $googleClientId = civic_config('GOOGLE_CLIENT_ID');
         }
         .oauth-divider span {
             padding: 0 12px;
+            background: var(--card-bg);
         }
+        
         .google-btn-wrap {
             display: flex;
             justify-content: center;
+            align-items: center;
             width: 100%;
-            margin-bottom: 8px;
-            min-height: 44px;
+            margin-bottom: 6px;
+            min-height: 46px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .g_id_signin {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .g_id_signin > div {
+            margin: 0 auto !important;
         }
 
         .auth-status-msg {
@@ -130,6 +146,33 @@ $googleClientId = civic_config('GOOGLE_CLIENT_ID');
         .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; padding: 12px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; text-align: center; }
         .top-lang-bar { text-align: right; margin-bottom: 12px; }
         .top-lang-bar select { padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: 700; font-family: inherit; cursor: pointer; }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+            .login-card {
+                padding: 28px 20px;
+                border-radius: 18px;
+            }
+            .neu-icon {
+                width: 52px;
+                height: 52px;
+                margin-bottom: 12px;
+                font-size: 1.2rem;
+            }
+            .login-header h2 {
+                font-size: 1.4rem;
+            }
+            .input-group input {
+                padding: 13px 14px 13px 44px;
+                font-size: 0.9rem;
+            }
+            .submit-btn {
+                padding: 13px;
+                font-size: 0.92rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -178,12 +221,11 @@ $googleClientId = civic_config('GOOGLE_CLIENT_ID');
             <div class="google-btn-wrap">
                 <div class="g_id_signin"
                      data-type="standard"
-                     data-shape="rectangular"
+                     data-shape="pill"
                      data-theme="outline"
-                     data-text="signin_with"
+                     data-text="continue_with"
                      data-size="large"
-                     data-logo_alignment="left"
-                     data-width="368">
+                     data-logo_alignment="left">
                 </div>
             </div>
 
@@ -244,12 +286,11 @@ $googleClientId = civic_config('GOOGLE_CLIENT_ID');
             <div class="google-btn-wrap">
                 <div class="g_id_signin"
                      data-type="standard"
-                     data-shape="rectangular"
+                     data-shape="pill"
                      data-theme="outline"
                      data-text="signup_with"
                      data-size="large"
-                     data-logo_alignment="left"
-                     data-width="368">
+                     data-logo_alignment="left">
                 </div>
             </div>
 
