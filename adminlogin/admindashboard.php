@@ -1176,5 +1176,6 @@ $mapProblemsJson = json_encode($map_problems, JSON_UNESCAPED_UNICODE);
             }
         }
     </script>
+    <?php include("../includes/admin_bottom_nav.php"); ?>
 </body>
 </html>

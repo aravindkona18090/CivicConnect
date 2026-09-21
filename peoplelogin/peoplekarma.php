@@ -578,5 +578,6 @@ $leaderboardRes = mysqli_query($conn, $leaderboardQuery);
     }
     </script>
     <?php include("../includes/chatbot_widget.php"); ?>
+    <?php include("../includes/citizen_bottom_nav.php"); ?>
 </body>
 </html>
